@@ -1,0 +1,3 @@
+rootProject.name = 'smartturn-data'
+include ':smartturn-utils'
+project(':smartturn-utils').projectDir = new File( '../smartturn-utils/' )

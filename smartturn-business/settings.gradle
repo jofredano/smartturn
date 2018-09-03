@@ -1,0 +1,5 @@
+rootProject.name = 'smartturn-business'
+include ':smartturn-data', ':smartturn-utils', 'smartturn-persistent' 
+project(':smartturn-data').projectDir  = new File( '../smartturn-data/' )
+project(':smartturn-utils').projectDir = new File( '../smartturn-utils/' )
+project(':smartturn-persistent').projectDir = new File( '../smartturn-persistent/' )
