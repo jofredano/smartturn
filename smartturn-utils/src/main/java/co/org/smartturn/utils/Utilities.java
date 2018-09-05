@@ -4,10 +4,9 @@ import java.io.Serializable;
 import java.security.MessageDigest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
-import java.util.Base64;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -244,6 +243,22 @@ public final class Utilities {
 		   result = (I)entity.get(field);
 		}
 		return result;
+	}
+	
+	/**
+	 * Obtiene la informacion de un atributo de un objeto y lo mappeara
+	 * @param 	object	Objeto de lectura
+	 * @param 	field	Atributo a leer
+	 * @return	I
+	 * @throws  MapperException 
+	 */
+	@SuppressWarnings("unchecked")
+	public static <I extends Serializable> I getMapper(I object, Field field, Class<Object> type) throws MapperException {
+		I  value  = getValue(object, field);
+		if(value != null && value instanceof MapEntity) {
+		   value  = (I) ((MapEntity)value).map(type, null);	
+		}
+		return value;
 	}
 	
 	/**

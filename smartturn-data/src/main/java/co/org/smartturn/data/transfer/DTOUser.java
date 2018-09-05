@@ -237,7 +237,7 @@ public final class DTOUser extends ObjectMap implements User<DTOProfile> {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends Serializable> Class<T> type(Field field) {
+	public <T extends Object> Class<T> type(Field field) {
 		ColumnFields column = (ColumnFields)field;	
 		switch(column) {
 			case USER_CODE 			:  return (Class<T>) Utilities.getType(code     , Long.class);  

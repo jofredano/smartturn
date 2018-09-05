@@ -15,10 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.org.smartturn.app.RestResources;
 import co.org.smartturn.data.model.User;
-import co.org.smartturn.data.model.response.Response;
 import co.org.smartturn.data.transfer.DTOProfile;
-import co.org.smartturn.data.transfer.DTOUser;
 import co.org.smartturn.data.transfer.filter.UserFilter;
+import co.org.smartturn.data.transfer.security.DTOCredential;
 import co.org.smartturn.exception.SystemException;
 import co.org.smartturn.exception.data.Descriptor;
 import co.org.smartturn.services.UserServices;
@@ -81,17 +80,33 @@ public class UserResources extends RestResources {
      */
 	@RequestMapping( value = "/filter",  method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Serializable> filterUser(@RequestBody UserFilter filter) {
-    		System.err.println("Filter => " + filter);
     	try {
-    		Response<DTOUser> response = service.filter(filter);
             return ResponseEntity
             		.ok()
-                	.body(response);
+                	.body(service.filter(filter));
 		} catch (SystemException e) {
             return ResponseEntity
             		.status( HttpStatus.INTERNAL_SERVER_ERROR )
                     .body(e.getDefinition());
 		}
     }
+    
+    /**
+     * Permite iniciar sesion a un usuario
+     * @param 	credential	Informacin de credenciales
+     * @return	Response
+     */
+	@RequestMapping( value = "/login",  method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Serializable> login(@RequestBody DTOCredential credential) {
+    	try {
+            return ResponseEntity
+            		.ok()
+                	.body(service.access(credential));
+		} catch (SystemException e) {
+            return ResponseEntity
+            		.status( HttpStatus.INTERNAL_SERVER_ERROR )
+                    .body(e.getDefinition());
+		}
+	}
 
 }

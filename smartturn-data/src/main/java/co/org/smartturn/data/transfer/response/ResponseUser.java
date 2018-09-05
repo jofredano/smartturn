@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import co.org.smartturn.data.model.response.Response;
+import co.org.smartturn.data.model.response.Result;
 import co.org.smartturn.data.transfer.DTOUser;
 import co.org.smartturn.data.transfer.structure.ObjectMap;
 
@@ -15,7 +15,7 @@ import co.org.smartturn.data.transfer.structure.ObjectMap;
  *
  */
 @XmlRootElement
-public final class ResponseUser extends ObjectMap implements Response<DTOUser> {
+public final class ResponseUser extends ObjectMap implements Result<DTOUser> {
 
 	private static final long serialVersionUID = 1L;
 

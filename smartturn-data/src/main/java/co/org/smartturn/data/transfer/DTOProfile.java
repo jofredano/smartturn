@@ -164,7 +164,7 @@ public final class DTOProfile extends ObjectMap implements Profile<Long>, MapEnt
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends Serializable> Class<T> type(Field field) {
+	public <T extends Object> Class<T> type(Field field) {
 		ColumnFields column = (ColumnFields)field;	
 		switch(column) {
 			case PROFILE_CODE 		:  return (Class<T>) Utilities.getType(code		, Long.class);  

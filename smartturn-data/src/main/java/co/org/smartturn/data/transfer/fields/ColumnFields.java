@@ -72,7 +72,14 @@ public enum ColumnFields implements Field {
 	MOTORIST_MODIFIER 		( "conductor.modificador"  	 , false , "Usuario de ultima modificacion del conductor" ),
 	MOTORIST_STATE 			( "conductor.estado"  		 , false , "Estado del conductor"),
 	MOTORIST_CLIENT 		( "conductor.cliente"        , false , "Cliente asociado al conductor" ),
-	MOTORIST_TRANSPORT 		( "conductor.transportadora" , false , "Transportadora asociada al conductor")
+	MOTORIST_TRANSPORT 		( "conductor.transportadora" , false , "Transportadora asociada al conductor"),
+	//Campos para el acceso
+	ACCESS_CODE 			( "acceso.codigo" 			 , true  , "Codigo unico"),
+	ACCESS_USER 			( "acceso.usuario"   		 , false , "Usuario asociado al acceso"),
+	ACCESS_BEGIN 			( "acceso.inicio"            , false , "Fecha de inicio del acceso"),
+	ACCESS_END 				( "acceso.fin"               , false , "Fecha fin del acceso"),
+	ACCESS_DURATION         ( "acceso.duracion"          , false , "Duracion del acceso"),
+	ACCESS_TOKEN 			( "acceso.token"             , false , "Codigo de acceso")
 	;
 	
 	/**

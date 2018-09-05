@@ -104,11 +104,19 @@ public interface DataRepository<E extends java.io.Serializable, K extends java.i
 	
 	/**
 	 * Permite obtener un unico resultado de una consulta
+	 * @param   type 	Tipo de comando SQL
+	 * @param 	sql		Comando SQL a ejecutar
+	 * @return	T
+	 */
+	public <T extends Serializable> T getSingleResult(InstructionType type, String sql);
+	
+	/**
+	 * Permite obtener un unico resultado de una consulta
 	 * @param 	sql		Comando SQL a ejecutar
 	 * @return	T
 	 */
 	public <T extends Serializable> T getSingleResult(String sql);
-
+	
 	/**
 	 * Permite terminar la instancia
 	 */

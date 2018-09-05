@@ -70,7 +70,8 @@ public class DataPersistentMysqlHibernate<E extends java.io.Serializable, K exte
 		co.org.smartturn.persistent.vo.VOReference.class,
 		co.org.smartturn.persistent.vo.VOContact.class,
 		co.org.smartturn.persistent.vo.VOProfile.class,
-		co.org.smartturn.persistent.vo.VOUser.class
+		co.org.smartturn.persistent.vo.VOUser.class,
+		co.org.smartturn.persistent.vo.security.VOAccess.class
 	};
 	
 	/**
@@ -262,12 +263,12 @@ public class DataPersistentMysqlHibernate<E extends java.io.Serializable, K exte
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends Serializable> T getSingleResult(String sql) {
+	public <T extends Serializable> T getSingleResult(InstructionType type, String sql) {
 		Session session = null;
 		Query query 	= null; 
 		try {
 			session = getSession();
-			query 	= session.createNativeQuery(sql);
+			query 	= createQuery(session, type, sql);
 			return (T)query.getSingleResult();
 		} finally {
 			if(query != null) {
@@ -278,6 +279,11 @@ public class DataPersistentMysqlHibernate<E extends java.io.Serializable, K exte
 				session = null;
 			}
 		}
+	}
+	
+	@Override
+	public <T extends Serializable> T getSingleResult(String sql) {
+		return getSingleResult(InstructionType.JPA, sql);
 	}
 
 	@Override
@@ -305,7 +311,7 @@ public class DataPersistentMysqlHibernate<E extends java.io.Serializable, K exte
 			   .append( getEntityName(entity, alias) )
 			   .append( " WHERE " )
 			   .append( where.toString() );
-			return getSingleResult( sql.toString() );
+			return getSingleResult(InstructionType.JPA, sql.toString() );
 		} finally {
 			if(fields != null) {
 			   fields.clear();

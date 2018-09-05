@@ -1,53 +1,64 @@
 package co.org.smartturn.data.transfer.response;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import co.org.smartturn.data.model.response.Response;
-import co.org.smartturn.data.model.security.Access;
+import co.org.smartturn.data.transfer.security.DTOAccess;
 
 /**
- *  Clase que controla respuestas de procesos.
- *  
+ * Objeto de respuesta 
+ * 
  * @author joseanor
  *
  */
 @XmlRootElement
-public final class ResponseAccess implements Response<Access<java.util.Date>> {
+public class ResponseAccess implements Response<DTOAccess> {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Contenido de la respuesta entregada.
+	 * Dimension de la respuesta.
 	 */
-	@XmlElementWrapper (name = "content")
-    @XmlElement (name = "item")
-	protected ArrayList<Access<java.util.Date>> content;
+	private DTOAccess content;
 	
 	/**
 	 * Dimension de la respuesta.
 	 */
-	@XmlElement(name = "size")
-	protected long size;
-
+	private long size;
 	
+	/**
+	 * Constructor de la clase
+	 * @param 	content		Contenido de la respuesta
+	 * @param 	size		Cantidad de elementos
+	 */
+	public ResponseAccess(DTOAccess content, long size) {
+		this.content = content;
+		this.size = size;
+	}
+	
+	/**
+	 * Constructor de la clase
+	 */
+	public ResponseAccess() {
+		this(null, 0);
+	}
+
+	@XmlElement(name = "content")
 	@Override
-	public List<Access<java.util.Date>> getContent() {
+	public DTOAccess getContent() {
 		return content;
 	}
 
 	@Override
-	public long getSize() {
-		return size;
+	public void setContent(DTOAccess content) {
+		this.content = content;
 	}
 
+	@XmlElement(name = "size")
 	@Override
-	public void setContent(List<Access<java.util.Date>> content) {
-		this.content = (ArrayList<Access<java.util.Date>>) content;
+	public long getSize() {
+		return size;
 	}
 
 	@Override

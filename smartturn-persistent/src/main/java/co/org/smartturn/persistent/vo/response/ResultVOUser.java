@@ -2,8 +2,8 @@ package co.org.smartturn.persistent.vo.response;
 
 import java.util.List;
 
-import co.org.smartturn.data.model.response.Response;
-import co.org.smartturn.persistent.vo.VOProfile;
+import co.org.smartturn.data.model.response.Result;
+import co.org.smartturn.persistent.vo.VOUser;
 
 /**
  * Respuesta con relacion al objeto de entidad usuario.
@@ -11,16 +11,16 @@ import co.org.smartturn.persistent.vo.VOProfile;
  * @author joseanor
  *
  */
-public class ResponseVOProfile implements Response<VOProfile> {
+public class ResultVOUser implements Result<VOUser> {
 
 	private static final long serialVersionUID = 1L;
 	
-	private List<VOProfile> content;
+	private List<VOUser> content;
 
 	private long size;
 	
 	@Override
-	public List<VOProfile> getContent() {
+	public List<VOUser> getContent() {
 		return content;
 	}
 
@@ -30,7 +30,7 @@ public class ResponseVOProfile implements Response<VOProfile> {
 	}
 
 	@Override
-	public void setContent(List<VOProfile> content) {
+	public void setContent(List<VOUser> content) {
 		this.content = content;
 	}
 

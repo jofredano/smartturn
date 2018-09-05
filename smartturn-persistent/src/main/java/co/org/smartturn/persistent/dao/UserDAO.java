@@ -1,6 +1,7 @@
 package co.org.smartturn.persistent.dao;
 
-import co.org.smartturn.data.model.response.Response;
+import co.org.smartturn.data.model.response.Result;
+import co.org.smartturn.data.model.security.Credential;
 import co.org.smartturn.data.structure.MapEntity;
 import co.org.smartturn.data.transfer.Pageable;
 import co.org.smartturn.definitions.DataRepository;
@@ -19,20 +20,20 @@ public interface UserDAO extends DataRepository<VOUser, Long> {
 	 * Permite realizar consulta de los usuarios.
 	 * @param 	filter			Filtro de busqueda
 	 * @param 	paging			Paginacion de los resultados
-	 * @return	ResponseData
+	 * @return	Result<VOUser>
 	 * @throws 	PersistentException
 	 */
-	public Response<VOUser> filter(
+	public Result<VOUser> filter(
 		MapEntity 	filter, 
 		Pageable 	paging) throws PersistentException;
 	
 	/**
 	 * Permite realizar consulta de los usuarios.
 	 * @param 	filter			Filtro de busqueda
-	 * @return	ResponseData
+	 * @return	Result<VOUser>
 	 * @throws 	PersistentException
 	 */
-	public Response<VOUser> filter(MapEntity filter) throws PersistentException;
+	public Result<VOUser> filter(MapEntity filter) throws PersistentException;
 	
 	/**
 	 * Permite actualizar/guardar la informacion de un usuario
@@ -45,9 +46,9 @@ public interface UserDAO extends DataRepository<VOUser, Long> {
 	/**
 	 * Permite realizar acceso a un usuario 
 	 * @param 	credential		Credenciales del usuario
-	 * @return	boolean
+	 * @return	VOUser
 	 * @throws 	PersistentException
 	 */
-	public boolean checkLogin(VOUser credential) throws PersistentException;
+	public VOUser checkLogin(Credential credential) throws PersistentException;
 
 }

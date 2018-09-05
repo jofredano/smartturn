@@ -9,16 +9,15 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import co.org.smartturn.data.model.Reference;
-import co.org.smartturn.data.model.response.Response;
+import co.org.smartturn.data.model.response.Result;
 import co.org.smartturn.data.structure.MapEntity;
 import co.org.smartturn.data.transfer.Pageable;
-import co.org.smartturn.data.transfer.response.ResponseStatus;
 import co.org.smartturn.definitions.database.section.Transaction;
 import co.org.smartturn.exception.PersistentException;
 import co.org.smartturn.persistent.dao.ReferenceDAO;
 import co.org.smartturn.persistent.dao.mysql.DataPersistentMysqlHibernate;
 import co.org.smartturn.persistent.vo.VOReference;
-import co.org.smartturn.persistent.vo.response.ResponseVOReference;
+import co.org.smartturn.persistent.vo.response.ResultVOReference;
 
 /**
  * Implementacion de la persistencia a usuarios.
@@ -32,9 +31,9 @@ public class ReferenceRepository extends DataPersistentMysqlHibernate<VOReferenc
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Response<VOReference> filter(MapEntity filter, Pageable paging) throws PersistentException {
+	public Result<VOReference> filter(MapEntity filter, Pageable paging) throws PersistentException {
 		Session session = null;
-		Response<VOReference> items = null;
+		Result<VOReference> items = null;
 		StringBuilder sql = new StringBuilder();
 		sql.append("	SELECT 	p ");
 		sql.append("	FROM 	co.org.smartturn.persistent.vo.VOReference p ");
@@ -47,7 +46,7 @@ public class ReferenceRepository extends DataPersistentMysqlHibernate<VOReferenc
 			   query.setMaxResults((int) paging.getCount());
 			}
 			List<VOReference> data   = query.getResultList();
-			items = new ResponseVOReference();
+			items = new ResultVOReference();
 			items.setContent( data );
 			items.setSize( data.size() );
 		} finally {
@@ -59,13 +58,13 @@ public class ReferenceRepository extends DataPersistentMysqlHibernate<VOReferenc
 	}
 
 	@Override
-	public Response<VOReference> filter(MapEntity filter) throws PersistentException {
+	public Result<VOReference> filter(MapEntity filter) throws PersistentException {
 		return filter(filter, null);
 	}
 
 	@Override
-	public Response<Integer> update(Reference reference) throws PersistentException {
-		return execute((VOReference) reference, Transaction.UPDATE) != null?new ResponseStatus(1):null;
+	public boolean update(Reference reference) throws PersistentException {
+		return execute((VOReference) reference, Transaction.UPDATE) != null;
 	}
 
 }

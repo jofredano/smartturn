@@ -25,7 +25,7 @@ public interface MapEntity extends Struct, Mapper<MapEntity, MapEntity> {
 	 * @param 	field		Campo a obtener el tipo
 	 * @return	Class<?>
 	 */
-	public default <T extends Serializable> Class<T> type(Field field) {
+	public default <T extends Object> Class<T> type(Field field) {
 		return null;
 	}
 	

@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import co.org.smartturn.data.model.response.Response;
+import co.org.smartturn.data.model.response.Result;
 
 /**
  * Respuesta de estados transaccionales.
@@ -14,7 +14,7 @@ import co.org.smartturn.data.model.response.Response;
  *
  */
 @XmlRootElement
-public class ResponseStatus implements Response<Integer> {
+public class ResponseStatus implements Result<Integer> {
 
 	private static final long serialVersionUID = 1L;
 

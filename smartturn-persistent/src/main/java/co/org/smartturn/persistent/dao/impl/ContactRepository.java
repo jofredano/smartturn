@@ -8,16 +8,15 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
-import co.org.smartturn.data.model.response.Response;
+import co.org.smartturn.data.model.response.Result;
 import co.org.smartturn.data.structure.MapEntity;
 import co.org.smartturn.data.transfer.Pageable;
-import co.org.smartturn.data.transfer.response.ResponseStatus;
 import co.org.smartturn.definitions.database.section.Transaction;
 import co.org.smartturn.exception.PersistentException;
 import co.org.smartturn.persistent.dao.ContactDAO;
 import co.org.smartturn.persistent.dao.mysql.DataPersistentMysqlHibernate;
 import co.org.smartturn.persistent.vo.VOContact;
-import co.org.smartturn.persistent.vo.response.ResponseVOContact;
+import co.org.smartturn.persistent.vo.response.ResultVOContact;
 
 /**
  * Implementacion de la persistencia a usuarios.
@@ -31,9 +30,9 @@ public class ContactRepository extends DataPersistentMysqlHibernate<VOContact, L
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public Response<VOContact> filter(MapEntity filter, Pageable paging) throws PersistentException {
+	public Result<VOContact> filter(MapEntity filter, Pageable paging) throws PersistentException {
 		Session session = null;
-		Response<VOContact> items = null;
+		Result<VOContact> items = null;
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT p ");
 		sql.append(" FROM 	co.org.smartturn.persistent.vo.VOContact p ");
@@ -46,7 +45,7 @@ public class ContactRepository extends DataPersistentMysqlHibernate<VOContact, L
 			   query.setMaxResults((int) paging.getCount());
 			}
 			List<VOContact> data = query.getResultList();
-			items = new ResponseVOContact();
+			items = new ResultVOContact();
 			items.setContent( data );
 			items.setSize( data.size() );
 		} finally {
@@ -59,12 +58,12 @@ public class ContactRepository extends DataPersistentMysqlHibernate<VOContact, L
 	}
 
 	@Override
-	public Response<VOContact> filter(MapEntity filter) throws PersistentException {
+	public Result<VOContact> filter(MapEntity filter) throws PersistentException {
 		return filter(filter, null);
 	}
 
 	@Override
-	public Response<Integer> update(VOContact contact) throws PersistentException {
-		return execute(contact, Transaction.UPDATE) != null?new ResponseStatus(1):null;
+	public boolean update(VOContact contact) throws PersistentException {
+		return execute(contact, Transaction.UPDATE) != null;
 	}
 }

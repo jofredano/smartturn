@@ -1,7 +1,7 @@
 package co.org.smartturn.persistent.dao;
 
 import co.org.smartturn.data.model.Profile;
-import co.org.smartturn.data.model.response.Response;
+import co.org.smartturn.data.model.response.Result;
 import co.org.smartturn.data.structure.MapEntity;
 import co.org.smartturn.data.transfer.Pageable;
 import co.org.smartturn.definitions.DataRepository;
@@ -16,11 +16,11 @@ import co.org.smartturn.persistent.vo.VOProfile;
  */
 public interface ProfileDAO extends DataRepository<Profile<Long>, Long> {
 
-	public Response<VOProfile> filter(
+	public Result<VOProfile> filter(
 		MapEntity filter, 
 		Pageable paging) throws PersistentException;
 
-	public Response<VOProfile> filter(
+	public Result<VOProfile> filter(
 		MapEntity filter) throws PersistentException;
 
 	/**
@@ -29,7 +29,7 @@ public interface ProfileDAO extends DataRepository<Profile<Long>, Long> {
 	 * @return	Response<Integer>
 	 * @throws 	PersistentException
 	 */
-	public Response<Integer> update(
+	public boolean update(
 		Profile<?> item) throws PersistentException;
 
 }

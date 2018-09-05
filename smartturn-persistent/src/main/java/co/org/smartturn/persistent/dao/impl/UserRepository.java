@@ -10,7 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import co.org.smartturn.data.model.filter.Range;
 import co.org.smartturn.data.model.filter.TransformData;
-import co.org.smartturn.data.model.response.Response;
+import co.org.smartturn.data.model.response.Result;
+import co.org.smartturn.data.model.security.Credential;
 import co.org.smartturn.data.structure.MapEntity;
 import co.org.smartturn.data.transfer.Pageable;
 import co.org.smartturn.data.transfer.filter.UserFilter;
@@ -20,7 +21,7 @@ import co.org.smartturn.exception.PersistentException;
 import co.org.smartturn.persistent.dao.UserDAO;
 import co.org.smartturn.persistent.dao.mysql.DataPersistentMysqlHibernate;
 import co.org.smartturn.persistent.vo.VOUser;
-import co.org.smartturn.persistent.vo.response.ResponseVOUser;
+import co.org.smartturn.persistent.vo.response.ResultVOUser;
 import co.org.smartturn.utils.Utilities;
 
 /**
@@ -35,9 +36,9 @@ public class UserRepository extends DataPersistentMysqlHibernate<VOUser, Long> i
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Response<VOUser> filter(MapEntity filter, Pageable paging) throws PersistentException {
+	public Result<VOUser> filter(MapEntity filter, Pageable paging) throws PersistentException {
 		Session session = null;
-		Response<VOUser> items = null;
+		Result<VOUser> items = null;
 		StringBuilder sql = new StringBuilder();
 		sql.append("	SELECT 	p ");
 		sql.append("	FROM 	co.org.smartturn.persistent.vo.VOUser p ");
@@ -51,7 +52,7 @@ public class UserRepository extends DataPersistentMysqlHibernate<VOUser, Long> i
 			   query.setMaxResults((int) paging.getCount());
 			}
 			List<VOUser> data = query.getResultList();
-			items = new ResponseVOUser();
+			items = new ResultVOUser();
 			items.setContent( data );
 			items.setSize( data.size() );
 			return items;
@@ -68,7 +69,7 @@ public class UserRepository extends DataPersistentMysqlHibernate<VOUser, Long> i
 	}
 
 	@Override
-	public Response<VOUser> filter(MapEntity filter) throws PersistentException {
+	public Result<VOUser> filter(MapEntity filter) throws PersistentException {
 		return filter(filter, null);
 	}
 
@@ -78,23 +79,22 @@ public class UserRepository extends DataPersistentMysqlHibernate<VOUser, Long> i
 	}
 
 	@Override
-	public boolean checkLogin(VOUser credential) throws PersistentException {
+	public VOUser checkLogin(Credential credential) throws PersistentException {
 		if(credential == null) {
 		   throw new PersistentException(
 			  "PER-001", 
 			  "No hay informacion del usuario");
 		}
 		StringBuilder sql = new StringBuilder();
-		sql.append("  SELECT IF(p.code > 0, 'TRUE', 'FALSE') ");
+		sql.append("  SELECT p ");
 		sql.append("  FROM 	 co.org.smartturn.persistent.vo.VOUser p ");
-		sql.append("  WHERE  1 = 1 ");
-		sql.append("  AND 	 p.username = '")
+		sql.append("  WHERE  p.username = '")
 		   .append( credential.getUsername() )
 		   .append( "'" );
 		sql.append("  AND 	 p.password = PASSWORD('")
 		   .append( credential.getPassword() )
 		   .append( "')" );
-		return "TRUE".equalsIgnoreCase(getSingleResult(sql.toString()));
+		return getSingleResult(sql.toString());
 	}
 
 	/**

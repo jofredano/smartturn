@@ -303,7 +303,7 @@ public final class DTOContact extends ObjectMap implements Contact<DTOReference>
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends Serializable> Class<T> type(Field field) {
+	public <T extends Object> Class<T> type(Field field) {
 		ColumnFields column = (ColumnFields)field;	
 		switch(column) {
 			case CONTACT_FIRSTNAME  	:  return (Class<T>) Utilities.getType(firstname		, String.class);  

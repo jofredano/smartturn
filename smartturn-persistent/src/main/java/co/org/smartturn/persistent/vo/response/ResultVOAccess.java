@@ -2,25 +2,25 @@ package co.org.smartturn.persistent.vo.response;
 
 import java.util.List;
 
-import co.org.smartturn.data.model.response.Response;
-import co.org.smartturn.persistent.vo.VOReference;
+import co.org.smartturn.data.model.response.Result;
+import co.org.smartturn.persistent.vo.security.VOAccess;
 
 /**
- * Respuesta con relacion al objeto de entidad referencias.
+ * Respuesta con relacion al objeto de entidad de accesos.
  * 
  * @author joseanor
  *
  */
-public class ResponseVOReference implements Response<VOReference> {
+public class ResultVOAccess implements Result<VOAccess> {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private List<VOReference> content;
+	private List<VOAccess> content;
 
 	private long size;
 	
 	@Override
-	public List<VOReference> getContent() {
+	public List<VOAccess> getContent() {
 		return content;
 	}
 
@@ -30,7 +30,7 @@ public class ResponseVOReference implements Response<VOReference> {
 	}
 
 	@Override
-	public void setContent(List<VOReference> content) {
+	public void setContent(List<VOAccess> content) {
 		this.content = content;
 	}
 

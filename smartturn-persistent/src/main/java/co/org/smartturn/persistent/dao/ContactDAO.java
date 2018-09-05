@@ -1,6 +1,6 @@
 package co.org.smartturn.persistent.dao;
 
-import co.org.smartturn.data.model.response.Response;
+import co.org.smartturn.data.model.response.Result;
 import co.org.smartturn.data.structure.MapEntity;
 import co.org.smartturn.data.transfer.Pageable;
 import co.org.smartturn.definitions.DataRepository;
@@ -22,7 +22,7 @@ public interface ContactDAO extends DataRepository<VOContact, Long> {
 	 * @return	Response<VOContact>
 	 * @throws 	PersistentException
 	 */
-	public Response<VOContact> filter(
+	public Result<VOContact> filter(
 		MapEntity 	filter, 
 		Pageable 	paging) throws PersistentException;
 
@@ -32,14 +32,14 @@ public interface ContactDAO extends DataRepository<VOContact, Long> {
 	 * @return	Response<VOContact>
 	 * @throws 	PersistentException
 	 */
-	public Response<VOContact> filter(MapEntity filter) throws PersistentException;
+	public Result<VOContact> filter(MapEntity filter) throws PersistentException;
 
 	/**
 	 * Metodo que almacena la informacion
 	 * @param 	item		Informacion del contacto
-	 * @return	Response<Integer>
+	 * @return	boolean
 	 * @throws 	PersistentException
 	 */
-	public Response<Integer> update(VOContact item) throws PersistentException;
+	public boolean update(VOContact item) throws PersistentException;
 
 }

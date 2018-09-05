@@ -244,7 +244,7 @@ public class VOUser extends ObjectMap implements User<VOProfile> {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends Serializable> Class<T> type(Field field) {
+	public <T extends Object> Class<T> type(Field field) {
 		ColumnFields column = (ColumnFields)field;	
 		switch(column) {
 			case USER_CODE 			:  return (Class<T>) Utilities.getType(code     , Long.class);  
@@ -266,17 +266,24 @@ public class VOUser extends ObjectMap implements User<VOProfile> {
 		if(!name.getName().contains("User")) {
 		   throw new MapperException("PER-45029", "No se puede hacer el mappeo, no hay compatibilidad en el objeto");	
 		}
-		User<DTOProfile> object = new DTOUser();
-		object.put( ColumnFields.USER_CODE 		, this.get(ColumnFields.USER_CODE) );
-		object.put( ColumnFields.USER_CREATER 	, this.get(ColumnFields.USER_CREATER) );
-		object.put( ColumnFields.USER_MODIFIER 	, this.get(ColumnFields.USER_MODIFIER) );
-		object.put( ColumnFields.USER_STATE 	, this.get(ColumnFields.USER_STATE) );
-		object.put( ColumnFields.USER_NAME 		, this.get(ColumnFields.USER_NAME) );
-		object.put( ColumnFields.USER_PASSWD 	, this.get(ColumnFields.USER_PASSWD) );
-		object.put( ColumnFields.USER_CREATED 	, Utilities.toUtilDate( (java.sql.Date)this.get(ColumnFields.USER_CREATED) ) );
-		object.put( ColumnFields.USER_MODIFIED 	, Utilities.toUtilDate( (java.sql.Date)this.get(ColumnFields.USER_MODIFIED) ) );
-		object.put( ColumnFields.USER_CONTACT	, ((MapEntity)this.get(ColumnFields.USER_CONTACT)).map(object.type(ColumnFields.USER_CONTACT), null) );
-		object.put( ColumnFields.USER_PROFILES	, (Serializable) Utilities.toArray(profiles, DTOProfile.class) );
-		return object;
+			User<DTOProfile> object = null;
+		try {
+			object = new DTOUser();
+			object.put( ColumnFields.USER_CODE 		, this.get(ColumnFields.USER_CODE) );
+			object.put( ColumnFields.USER_CREATER 	, this.get(ColumnFields.USER_CREATER) );
+			object.put( ColumnFields.USER_MODIFIER 	, this.get(ColumnFields.USER_MODIFIER) );
+			object.put( ColumnFields.USER_STATE 	, this.get(ColumnFields.USER_STATE) );
+			object.put( ColumnFields.USER_NAME 		, this.get(ColumnFields.USER_NAME) );
+			object.put( ColumnFields.USER_PASSWD 	, this.get(ColumnFields.USER_PASSWD) );
+			object.put( ColumnFields.USER_CREATED 	, Utilities.toUtilDate( (java.sql.Date)this.get(ColumnFields.USER_CREATED) ) );
+			object.put( ColumnFields.USER_MODIFIED 	, Utilities.toUtilDate( (java.sql.Date)this.get(ColumnFields.USER_MODIFIED) ) );
+			object.put( ColumnFields.USER_CONTACT	, Utilities.getMapper(this, ColumnFields.USER_CONTACT, object.type(ColumnFields.USER_CONTACT)) );
+			object.put( ColumnFields.USER_PROFILES	, (Serializable) Utilities.toArray(profiles, DTOProfile.class) );
+			return object;			
+		} finally {
+			if(object != null) {
+			   object = null;	
+			}
+		}
 	}
 }
