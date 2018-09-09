@@ -64,7 +64,7 @@ public final class UserServicesImpl implements UserServices {
 	}
 
 	@Override
-	public Response<Integer> validate(Access<java.util.Date, DTOUser> credential) throws SystemException {
+	public boolean validate(Access<java.util.Date, DTOUser> credential) throws SystemException {
 		return getBusiness().validate(credential);
 	}
 

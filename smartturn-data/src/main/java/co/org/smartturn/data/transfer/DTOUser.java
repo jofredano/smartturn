@@ -16,6 +16,8 @@ import co.org.smartturn.data.transfer.adapter.DateAdapter;
 import co.org.smartturn.data.transfer.fields.ColumnFields;
 import co.org.smartturn.data.transfer.structure.ObjectMap;
 import co.org.smartturn.exception.transfer.MapperException;
+import co.org.smartturn.persistent.vo.VOProfile;
+import co.org.smartturn.persistent.vo.VOUser;
 import co.org.smartturn.utils.Utilities;
 
 /**
@@ -256,7 +258,28 @@ public final class DTOUser extends ObjectMap implements User<DTOProfile> {
 
 	@Override
 	public MapEntity map(Class<?> name, MapEntity source) throws MapperException {
-		return null;
+		if(!name.getName().contains("User")) {
+		   throw new MapperException("PER-45029", "No se puede hacer el mappeo, no hay compatibilidad en el objeto");	
+		}
+			User<VOProfile> object = null;
+		try {
+			object = new VOUser();
+			object.put( ColumnFields.USER_CODE 		, this.get(ColumnFields.USER_CODE) );
+			object.put( ColumnFields.USER_CREATER 	, this.get(ColumnFields.USER_CREATER) );
+			object.put( ColumnFields.USER_MODIFIER 	, this.get(ColumnFields.USER_MODIFIER) );
+			object.put( ColumnFields.USER_STATE 	, this.get(ColumnFields.USER_STATE) );
+			object.put( ColumnFields.USER_NAME 		, this.get(ColumnFields.USER_NAME) );
+			object.put( ColumnFields.USER_PASSWD 	, this.get(ColumnFields.USER_PASSWD) );
+			object.put( ColumnFields.USER_CREATED 	, Utilities.toSqlDate( (java.util.Date)this.get(ColumnFields.USER_CREATED) ) );
+			object.put( ColumnFields.USER_MODIFIED 	, Utilities.toSqlDate( (java.util.Date)this.get(ColumnFields.USER_MODIFIED) ) );
+			object.put( ColumnFields.USER_CONTACT	, Utilities.getMapper(this, ColumnFields.USER_CONTACT, object.type(ColumnFields.USER_CONTACT)) );
+			object.put( ColumnFields.USER_PROFILES	, (Serializable) Utilities.toArray(profiles, DTOProfile.class) );
+			return object;			
+		} finally {
+			if(object != null) {
+			   object = null;	
+			}
+		}
 	}
 	
 }

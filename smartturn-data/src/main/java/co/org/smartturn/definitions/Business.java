@@ -13,6 +13,6 @@ public interface Business {
 	 * Obtiene el objeto de repositorio asociado a este objeto de negocio.
 	 * @return	DatabaseRepository
 	 */
-	public DataRepository<?,?> getRepository();
+	public <E extends java.io.Serializable, K extends java.io.Serializable> DataRepository<E, K> getRepository();
 	
 }

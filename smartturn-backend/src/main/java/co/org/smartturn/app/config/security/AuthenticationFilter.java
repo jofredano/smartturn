@@ -15,7 +15,7 @@ import javax.servlet.ServletResponse;
  * @author joseanor
  *
  */
-public class AuthenticationFilter implements Filter{
+public class AuthenticationFilter implements Filter {
 
 	/**
 	 * Configuracion del filtro
@@ -29,6 +29,7 @@ public class AuthenticationFilter implements Filter{
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		System.err.println("Peticion => " + request.toString());
 		chain.doFilter(request, response);
 	}
 

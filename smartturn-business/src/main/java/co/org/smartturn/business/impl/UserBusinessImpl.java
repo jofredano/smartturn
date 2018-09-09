@@ -1,5 +1,7 @@
 package co.org.smartturn.business.impl;
 
+import java.io.Serializable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -14,7 +16,7 @@ import co.org.smartturn.data.structure.MapEntity;
 import co.org.smartturn.data.transfer.DTOUser;
 import co.org.smartturn.data.transfer.Pageable;
 import co.org.smartturn.data.transfer.response.ResponseAccess;
-import co.org.smartturn.data.transfer.response.ResponseUser;
+import co.org.smartturn.data.transfer.response.ResultUser;
 import co.org.smartturn.data.transfer.security.DTOAccess;
 import co.org.smartturn.exception.SystemException;
 import co.org.smartturn.persistent.dao.UserDAO;
@@ -47,6 +49,7 @@ public class UserBusinessImpl implements UserBusiness {
 	private AccessDAO control;
 	
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public UserDAO getRepository() {
 		return dao;
@@ -54,7 +57,7 @@ public class UserBusinessImpl implements UserBusiness {
 
 	@Override
 	public Result<DTOUser> filter(MapEntity filter, Pageable paging) throws SystemException {
-		Result<DTOUser> response = new ResponseUser();
+		Result<DTOUser> response = new ResultUser();
 		Result<VOUser> jpa = getRepository().filter(filter, paging);
 		response.setContent( Utilities.toArray(jpa.getContent(), DTOUser.class) );
 		response.setSize( jpa.getSize() );
@@ -76,22 +79,25 @@ public class UserBusinessImpl implements UserBusiness {
 			VOAccess access = null;
 			Response<DTOAccess> response = null;
 			Result<VOAccess> result = null;
-			String token 	= null;
+			java.util.Map<String, Serializable> data = null;
 		try {
-			token 	= control.checkUser(credential);
-			if(token != null) {
-			   access 	 	= new VOAccess();
-			   access.setToken( token );
-			   result 	 	= control.filter( access );
+			data = control.checkUser(credential);
+			if(data != null && data.size() > 0) {
+			   access = new VOAccess();
+			   access.setToken( (String)data.get("token") );
+			   access.setEnd( (java.sql.Date)data.get("end") );
+			   result = control.filter( access );
 			   if(result != null && result.getSize() > 0) {
-				  access    = result.getContent().get(0);
-				  response  = new ResponseAccess( (DTOAccess)access.map(DTOAccess.class, null), 1 );   
+				  access = result.getContent().get(0);
+				  access.setEnd( (java.sql.Date)data.get("end") );
+				  access.getUser().setPassword( null );
+				  response = new ResponseAccess( (DTOAccess)access.map(DTOAccess.class, null), 1 );   
 			   }
 			}
 			return response;
 		} finally {
-			if(token != null) {
-			   token  = null;
+			if(data != null) {
+			   data  = null;
 			}
 			if(access != null) {
 			   access = null;	
@@ -112,9 +118,8 @@ public class UserBusinessImpl implements UserBusiness {
 	}
 
 	@Override
-	public Response<Integer> validate(Access<java.util.Date, DTOUser> credential) throws SystemException {
-		//getRepository().validate(credential)
-		return null;
+	public boolean validate(Access<java.util.Date, DTOUser> credential) throws SystemException {
+		return control.validate( (VOAccess) credential.map(VOAccess.class, credential) );
 	}
 
 }

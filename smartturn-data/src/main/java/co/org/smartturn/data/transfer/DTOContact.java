@@ -18,6 +18,8 @@ import co.org.smartturn.data.transfer.fields.ColumnFields;
 import co.org.smartturn.data.transfer.structure.DTODocument;
 import co.org.smartturn.data.transfer.structure.ObjectMap;
 import co.org.smartturn.exception.transfer.MapperException;
+import co.org.smartturn.persistent.vo.VOContact;
+import co.org.smartturn.persistent.vo.VOReference;
 import co.org.smartturn.utils.Utilities;
 
 /**
@@ -349,7 +351,25 @@ public final class DTOContact extends ObjectMap implements Contact<DTOReference>
 
 	@Override
 	public MapEntity map(Class<?> name, MapEntity source) throws MapperException {
-		return null;
+		if(!name.getName().contains("Contact")) {
+		   throw new MapperException("PER-45029", "No se puede hacer el mappeo, no hay compatibilidad en el objeto");	
+		}
+		Contact<VOReference> object = new VOContact();
+		object.put( ColumnFields.CONTACT_FIRSTNAME  	, this.get(ColumnFields.CONTACT_FIRSTNAME) );
+		object.put( ColumnFields.CONTACT_SECONDNAME 	, this.get(ColumnFields.CONTACT_SECONDNAME) );
+		object.put( ColumnFields.CONTACT_FIRSTLASTNAME 	, this.get(ColumnFields.CONTACT_FIRSTLASTNAME) );
+		object.put( ColumnFields.CONTACT_SECONDLASTNAME , this.get(ColumnFields.CONTACT_SECONDLASTNAME) );
+		object.put( ColumnFields.CONTACT_IDENTIFICATION , this.get(ColumnFields.CONTACT_IDENTIFICATION) );
+		object.put( ColumnFields.CONTACT_CODE 			, this.get(ColumnFields.CONTACT_CODE) );
+		object.put( ColumnFields.CONTACT_CREATER 		, this.get(ColumnFields.CONTACT_CREATER) );
+		object.put( ColumnFields.CONTACT_MODIFIER 		, this.get(ColumnFields.CONTACT_MODIFIER) );
+		object.put( ColumnFields.CONTACT_TYPE 			, this.get(ColumnFields.CONTACT_TYPE) );
+		object.put( ColumnFields.CONTACT_STATE 			, this.get(ColumnFields.CONTACT_STATE) );
+		object.put( ColumnFields.CONTACT_CREATED 		, Utilities.toSqlDate( (java.util.Date)this.get(ColumnFields.CONTACT_CREATED) ) );
+		object.put( ColumnFields.CONTACT_MODIFIED 		, Utilities.toSqlDate( (java.util.Date)this.get(ColumnFields.CONTACT_MODIFIED) ) );
+		object.put( ColumnFields.CONTACT_BIRTHDAY 		, Utilities.toSqlDate( (java.util.Date)this.get(ColumnFields.CONTACT_BIRTHDAY) ) );
+		object.put( ColumnFields.CONTACT_REFERENCES 	, (Serializable) Utilities.toArray(references, VOReference.class) );
+		return object;
 	}
-	
+
 }

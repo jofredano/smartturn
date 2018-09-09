@@ -67,9 +67,9 @@ public interface UserBusiness extends Business {
 	/**
 	 * Permite validar si el acceso esta vigente
 	 * @param 	credential		Acceso entregado al usuario
-	 * @return	ResponseData
+	 * @return	boolean
 	 * @throws 	SystemException
 	 */
-	public Response<Integer> validate(Access<java.util.Date, DTOUser> credential) throws SystemException;
+	public boolean validate(Access<java.util.Date, DTOUser> credential) throws SystemException;
 
 }

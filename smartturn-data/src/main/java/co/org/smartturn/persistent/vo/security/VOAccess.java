@@ -144,6 +144,7 @@ public final class VOAccess extends ObjectMap implements Access<java.sql.Date, V
 			case ACCESS_END 	 :  return getEnd( );  
 			case ACCESS_USER	 :  return getUser( );
 			case ACCESS_DURATION :  return getDuration( );
+			case ACCESS_TOKEN    :  return getToken();
 			default				 :  return null;	
 		}
 	}
@@ -152,11 +153,12 @@ public final class VOAccess extends ObjectMap implements Access<java.sql.Date, V
 	public void put(Field field, Serializable value) {
 		ColumnFields column = (ColumnFields)field;	
 		switch(column) {
-			case ACCESS_CODE 	 :  setCode( null ); break;
-			case ACCESS_BEGIN 	 :  setBegin( null ); break;
-			case ACCESS_END 	 :  setEnd( null ); break;
-			case ACCESS_USER	 :  setUser( null ); break;
-			case ACCESS_DURATION :  setDuration( null ); break;
+			case ACCESS_CODE 	 :  setCode( (Long)value ); break;
+			case ACCESS_BEGIN 	 :  setBegin( (java.sql.Date)value ); break;
+			case ACCESS_END 	 :  setEnd( (java.sql.Date)value ); break;
+			case ACCESS_USER	 :  setUser( (VOUser)value ); break;
+			case ACCESS_DURATION :  setDuration( (Long)value ); break;
+			case ACCESS_TOKEN    :  setToken( (String)value ); break;
 			default				 :  break;
 		}
 	}
@@ -171,6 +173,7 @@ public final class VOAccess extends ObjectMap implements Access<java.sql.Date, V
 			case ACCESS_BEGIN 	 :  return (Class<T>) Utilities.getType(begin    , java.sql.Date.class);  
 			case ACCESS_END 	 :  return (Class<T>) Utilities.getType(end 	 , java.sql.Date.class);  
 			case ACCESS_USER	 :  return (Class<T>) Utilities.getType(user  	 , VOUser.class);
+			case ACCESS_TOKEN    :  return (Class<T>) Utilities.getType(token  	 , String.class);
 			default				 :  return null;
 		}
 	}
@@ -183,6 +186,7 @@ public final class VOAccess extends ObjectMap implements Access<java.sql.Date, V
 			Access<java.util.Date, DTOUser> object = null;
 		try {
 			object = new DTOAccess();
+			object.put( ColumnFields.ACCESS_TOKEN     , this.get(ColumnFields.ACCESS_TOKEN));
 			object.put( ColumnFields.ACCESS_DURATION  , this.get(ColumnFields.ACCESS_DURATION) );
 			object.put( ColumnFields.ACCESS_CODE 	  , this.get(ColumnFields.ACCESS_CODE) );
 			object.put( ColumnFields.ACCESS_BEGIN 	  , Utilities.toUtilDate( (java.sql.Date)this.get(ColumnFields.ACCESS_BEGIN) ) );
@@ -191,7 +195,7 @@ public final class VOAccess extends ObjectMap implements Access<java.sql.Date, V
 			return object;
 		} finally {
 			if(object != null) {
-			   object = null;	
+			   object = null;
 			}
 		}
 	}

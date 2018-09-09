@@ -13,6 +13,8 @@ import co.org.smartturn.data.transfer.adapter.DateAdapter;
 import co.org.smartturn.data.transfer.fields.ColumnFields;
 import co.org.smartturn.data.transfer.structure.ObjectMap;
 import co.org.smartturn.exception.transfer.MapperException;
+import co.org.smartturn.persistent.vo.VOReference;
+import co.org.smartturn.utils.Utilities;
 
 /**
  * Implementacion del objeto de referencia.
@@ -245,7 +247,21 @@ public final class DTOReference extends ObjectMap implements Reference, MapEntit
 
 	@Override
 	public MapEntity map(Class<?> name, MapEntity source) throws MapperException {
-		return null;
+		if(!name.getName().contains("Reference")) {
+		   throw new MapperException("PER-45029", "No se puede hacer el mappeo, no hay compatibilidad en el objeto");	
+		}
+		Reference object = new VOReference();
+		object.put( ColumnFields.REFERENCE_CODE			, this.get(ColumnFields.REFERENCE_CODE) );
+		object.put( ColumnFields.REFERENCE_TYPE 		, this.get(ColumnFields.REFERENCE_TYPE) );
+		object.put( ColumnFields.REFERENCE_CATEGORY 	, this.get(ColumnFields.REFERENCE_CATEGORY) );
+		object.put( ColumnFields.REFERENCE_VALUE 		, this.get(ColumnFields.REFERENCE_VALUE) );
+		object.put( ColumnFields.REFERENCE_PREFERENCE   , this.get(ColumnFields.REFERENCE_PREFERENCE) );
+		object.put( ColumnFields.REFERENCE_STATE 		, this.get(ColumnFields.REFERENCE_STATE) );
+		object.put( ColumnFields.REFERENCE_CREATER 		, this.get(ColumnFields.REFERENCE_CREATER) );
+		object.put( ColumnFields.REFERENCE_MODIFIER 	, this.get(ColumnFields.REFERENCE_MODIFIER) );
+		object.put( ColumnFields.REFERENCE_CREATED 		, Utilities.toSqlDate( (java.util.Date)this.get(ColumnFields.REFERENCE_CREATED) ) );
+		object.put( ColumnFields.REFERENCE_MODIFIED 	, Utilities.toSqlDate( (java.util.Date)this.get(ColumnFields.REFERENCE_MODIFIED) ) );
+		return object;
 	}
-	
+
 }

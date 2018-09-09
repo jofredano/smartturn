@@ -1,5 +1,7 @@
 package co.org.smartturn.persistent.dao.security;
 
+import java.io.Serializable;
+
 import co.org.smartturn.data.model.response.Result;
 import co.org.smartturn.data.model.security.Credential;
 import co.org.smartturn.data.structure.MapEntity;
@@ -51,10 +53,18 @@ public interface AccessDAO extends DataRepository<VOAccess, Long> {
 
 	/**
 	 * Realiza acceso al usuario en el sistema.
-	 * @param 	credential
-	 * @return	String
+	 * @param 	credential		Informacion del usuario
+	 * @return	java.util.Map<String, Serializable>
+	 * @throws 	PersistentException
+	 */
+	public java.util.Map<String, Serializable> checkUser(Credential credential) throws PersistentException;
+
+	/**
+	 * Realiza validacion con el acceso para indicar si esta vigene o no
+	 * @param 	access			Informacion del acceso
+	 * @return	boolean
 	 * @throws PersistentException
 	 */
-	public String checkUser(Credential credential) throws PersistentException;
+	public boolean validate(VOAccess access) throws PersistentException;
 
 }

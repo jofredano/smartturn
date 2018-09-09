@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -52,7 +51,6 @@ public final class Utilities {
 	public static void setLogger(Logger log) {
 		logger = log;
 	}
-	
 
 	/**
 	 * Colocar la clave
@@ -133,11 +131,23 @@ public final class Utilities {
 	}
 	
 	/**
+	 * Convierte a fecha Timestamp
+	 * @param 	date	Fecha a convertir
+	 * @return	java.sql.Timestamp
+	 */
+	public static java.sql.Timestamp toTimestampDate(java.util.Date date) {
+		if(date == null) {
+		   return null;	
+		}
+		return new java.sql.Timestamp(date.getTime());
+	}
+	
+	/**
 	 * Convierte a fecha SQL
 	 * @param 	date	Fecha a convertir
 	 * @return	java.sql.Date
 	 */
-	public static java.sql.Date toSQLDate(java.util.Date date) {
+	public static java.sql.Date toSqlDate(java.util.Date date) {
 		if(date == null) {
 		   return null;	
 		}
@@ -155,6 +165,18 @@ public final class Utilities {
 		}
 		return new java.util.Date(date.getTime());
 	}
+	
+	/**
+	 * Convierte de Timestamp a Date
+	 * @param 	date	Fecha a converir
+	 * @return	java.util.Date
+	 */
+	public static java.util.Date toUtilDate(java.sql.Timestamp date) {
+		if(date == null) {
+		   return null;	
+		}
+		return new java.util.Date(date.getTime());
+	}
 
 	/**
 	 * Metodo que convierte cadena a fecha
@@ -162,8 +184,8 @@ public final class Utilities {
 	 * @param 	data		Dato cadena a convertir
 	 * @return	Date
 	 */
-	public static Date stringToDate(String format, String data) {
-			Date result = null;
+	public static java.util.Date stringToDate(String format, String data) {
+		java.util.Date result = null;
 		try {
 			if(data == null) {
 			   return null;
@@ -181,7 +203,7 @@ public final class Utilities {
 	 * @param 	data			Dato fecha a convertir
 	 * @return	String
 	 */
-	public static String dateToString(String format, Date data) {
+	public static String dateToString(String format, java.util.Date data) {
 		if(data == null) {
 		   return null;
 		}
@@ -270,18 +292,6 @@ public final class Utilities {
 	public static <I extends Serializable> String convertString(I object, Field field) {
 		I result = getValue(object, field);
 		return (result != null)?result.toString():null;
-	}
-	
-	/**
-	 * Convertir una fecha SQL a una fecha de utilidad
-	 * @param 	sqlDate			Fecha SQL a convertir
-	 * @return	java.util.Date
-	 */
-	public static java.util.Date convertToUtilDate(java.sql.Date sqlDate) {
-		if(sqlDate == null) {
-		   return null;
-		}
-		return new java.util.Date(sqlDate.getTime());
 	}
 	
 	/**

@@ -14,6 +14,8 @@ import co.org.smartturn.data.transfer.adapter.DateAdapter;
 import co.org.smartturn.data.transfer.fields.ColumnFields;
 import co.org.smartturn.data.transfer.structure.ObjectMap;
 import co.org.smartturn.exception.transfer.MapperException;
+import co.org.smartturn.persistent.vo.VOUser;
+import co.org.smartturn.persistent.vo.security.VOAccess;
 import co.org.smartturn.utils.Utilities;
 
 /**
@@ -136,6 +138,7 @@ public final class DTOAccess extends ObjectMap implements Access<java.util.Date,
 			case ACCESS_BEGIN 	 :  return (Class<T>) Utilities.getType(begin    , java.util.Date.class);  
 			case ACCESS_END 	 :  return (Class<T>) Utilities.getType(end 	 , java.util.Date.class);  
 			case ACCESS_USER	 :  return (Class<T>) Utilities.getType(user  	 , DTOUser.class);
+			case ACCESS_TOKEN    :  return (Class<T>) Utilities.getType(token  	 , String.class);
 			default				 :  return null;
 		}
 	}
@@ -149,6 +152,7 @@ public final class DTOAccess extends ObjectMap implements Access<java.util.Date,
 			case ACCESS_END 	 :  return getEnd( );  
 			case ACCESS_USER	 :  return getUser( );
 			case ACCESS_DURATION :  return getDuration( );
+			case ACCESS_TOKEN    :  return getToken();
 			default				 :  return null;	
 		}
 	}
@@ -157,18 +161,36 @@ public final class DTOAccess extends ObjectMap implements Access<java.util.Date,
 	public void put(Field field, Serializable value) {
 		ColumnFields column = (ColumnFields)field;	
 		switch(column) {
-			case ACCESS_CODE 	 :  setCode( null ); break;
-			case ACCESS_BEGIN 	 :  setBegin( null ); break;
-			case ACCESS_END 	 :  setEnd( null ); break;
-			case ACCESS_USER	 :  setUser( null ); break;
-			case ACCESS_DURATION :  setDuration( null ); break;
+			case ACCESS_CODE 	 :  setCode( (Long)value ); break;
+			case ACCESS_BEGIN 	 :  setBegin( (java.util.Date)value ); break;
+			case ACCESS_END 	 :  setEnd( (java.util.Date)value ); break;
+			case ACCESS_USER	 :  setUser( (DTOUser)value ); break;
+			case ACCESS_DURATION :  setDuration( (Long)value ); break;
+			case ACCESS_TOKEN    :  setToken( (String)value ); break;
 			default				 :  break;
 		}
 	}
 
 	@Override
 	public MapEntity map(Class<?> name, MapEntity source) throws MapperException {
-		return null;
+		if(!name.getName().contains("Access")) {
+		   throw new MapperException("PER-45029", "No se puede hacer el mappeo, no hay compatibilidad en el objeto");	
+		}
+			Access<java.sql.Date, VOUser> object = null;
+		try {
+			object = new VOAccess();
+			object.put( ColumnFields.ACCESS_TOKEN     , this.get(ColumnFields.ACCESS_TOKEN));
+			object.put( ColumnFields.ACCESS_DURATION  , this.get(ColumnFields.ACCESS_DURATION) );
+			object.put( ColumnFields.ACCESS_CODE 	  , this.get(ColumnFields.ACCESS_CODE) );
+			object.put( ColumnFields.ACCESS_BEGIN 	  , Utilities.toSqlDate( (java.util.Date)this.get(ColumnFields.ACCESS_BEGIN) ) );
+			object.put( ColumnFields.ACCESS_END 	  , Utilities.toSqlDate( (java.util.Date)this.get(ColumnFields.ACCESS_END) ) );
+			object.put( ColumnFields.ACCESS_USER	  , Utilities.getMapper(this, ColumnFields.ACCESS_USER, object.type(ColumnFields.ACCESS_USER)) );
+			return object;
+		} finally {
+			if(object != null) {
+			   object = null;
+			}
+		}
 	}
 
 }

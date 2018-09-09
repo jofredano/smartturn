@@ -1,5 +1,6 @@
 package co.org.smartturn.persistent.dao.security.impl;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.ParameterMode;
@@ -14,6 +15,7 @@ import co.org.smartturn.data.model.response.Result;
 import co.org.smartturn.data.model.security.Credential;
 import co.org.smartturn.data.structure.MapEntity;
 import co.org.smartturn.data.transfer.Pageable;
+import co.org.smartturn.data.transfer.fields.ColumnFields;
 import co.org.smartturn.definitions.database.section.Transaction;
 import co.org.smartturn.definitions.database.sql.InstructionType;
 import co.org.smartturn.exception.PersistentException;
@@ -43,6 +45,7 @@ public class AccessRepository extends DataPersistentMysqlHibernate<VOAccess, Lon
 		sql.append("  FROM 	 co.org.smartturn.persistent.vo.security.VOAccess p ");
 		sql.append("  WHERE  1 = 1 ");
 		try {
+			prepareQuery(filter, sql);
 			session  = getSession();
 			Query<VOAccess> query = session.createQuery(sql.toString());
 			if(paging != null) {
@@ -57,9 +60,10 @@ public class AccessRepository extends DataPersistentMysqlHibernate<VOAccess, Lon
 		} finally {
             if (session != null) {
                 closeSession();
+                session = null;
             }
-            if(items != null) {
-               items = null;
+            if (items != null) {
+                items = null;
             }
         }
 	}
@@ -70,34 +74,41 @@ public class AccessRepository extends DataPersistentMysqlHibernate<VOAccess, Lon
 	}
 
 	@Override
-	public String checkUser(Credential credential) throws PersistentException {
-		Session session 		= null;
-		String codeResponse 	= null;
-		String mssgResponse 	= null;
-		String tokenResponse 	= null;
+	public java.util.Map<String, Serializable> checkUser(Credential credential) throws PersistentException {
+		Session session 			= null;
+		String codeResponse 		= null;
+		String mssgResponse 		= null;
+		String tokenResponse 		= null;
+		java.sql.Date dateResponse 	= null;
+		java.util.Map<String, Serializable> data = null;
 		try {
 			String sql 	= "pcn_acceder_usuario";
 			session 	= getSession();
 			session.beginTransaction();
 			StoredProcedureQuery query = ((StoredProcedureQuery)createQuery(session, InstructionType.STOREPROCEDURE, sql))
-					.registerStoredProcedureParameter("_alias_usu"    	, String.class , ParameterMode.IN)
-					.registerStoredProcedureParameter("_clave_usu"    	, String.class , ParameterMode.IN)
-					.registerStoredProcedureParameter("o_token"         , String.class , ParameterMode.OUT)
-					.registerStoredProcedureParameter("o_codigo"        , String.class , ParameterMode.OUT)
-					.registerStoredProcedureParameter("o_descripcion"   , String.class , ParameterMode.OUT)
+					.registerStoredProcedureParameter("_alias_usu"    	, String.class 		  , ParameterMode.IN)
+					.registerStoredProcedureParameter("_clave_usu"    	, String.class 		  , ParameterMode.IN)
+					.registerStoredProcedureParameter("o_token"         , String.class 		  , ParameterMode.OUT)
+					.registerStoredProcedureParameter("o_codigo"        , String.class 		  , ParameterMode.OUT)
+					.registerStoredProcedureParameter("o_descripcion"   , String.class 		  , ParameterMode.OUT)
+					.registerStoredProcedureParameter("o_ffin"          , java.sql.Date.class , ParameterMode.OUT)
 					.setParameter("_alias_usu" , credential.getUsername())
 					.setParameter("_clave_usu" , credential.getPassword());
 			query.execute();
 			tokenResponse = (String)query.getOutputParameterValue("o_token");
 			codeResponse  = (String)query.getOutputParameterValue("o_codigo");
 			mssgResponse  = (String)query.getOutputParameterValue("o_descripcion");
+			dateResponse  = (java.sql.Date)query.getOutputParameterValue("o_ffin");
 			if(!Utilities.isEmpty(codeResponse) && "OK".equalsIgnoreCase(codeResponse)) {
+				data 	  = new java.util.HashMap<>();
+				data.put("token" , tokenResponse);
+				data.put("end"   , dateResponse);
 				session.getTransaction().commit();	
 			} else {
 				session.getTransaction().rollback();
 				throw new PersistentException(codeResponse, mssgResponse);
 			}
-			return tokenResponse;
+			return data;
 		} finally {
 			if (session != null) {
 				closeSession();
@@ -115,5 +126,35 @@ public class AccessRepository extends DataPersistentMysqlHibernate<VOAccess, Lon
 	public VOAccess create(VOAccess user) throws PersistentException {
 		return execute(user, Transaction.SAVE);
 	}
+	
+	@Override
+	public boolean validate(VOAccess access) throws PersistentException {
+		if(access == null) {
+		   throw new PersistentException("PER-001", "No hay informacion de acceso");
+		}
+		StringBuilder sql = new StringBuilder();
+		sql.append("  SELECT IF(COUNT(p.token) > 0, 'TRUE' , 'FALSE') AS checked ");
+		sql.append("  FROM 	 co.org.smartturn.persistent.vo.security.VOAccess p ");
+		sql.append("  WHERE  p.token = '").append( access.get(ColumnFields.ACCESS_TOKEN) ).append("' ");
+		sql.append("  AND 	 DATE_ADD(p.begin, INTERVAL p.duration MINUTE) <= CURRENT_TIMESTAMP ");
+		return "TRUE".equalsIgnoreCase(getSingleResult(sql.toString()));
+	}
 
+	/**
+	 * Metodo que prepara la consulta a la base de datos
+	 * @param 	filter		Informacion para realizar filtro
+	 * @param 	sql			Objeto SQL base
+	 * @throws PersistentException
+	 */
+	protected static void prepareQuery(MapEntity filter, StringBuilder sql) throws PersistentException {
+		if(filter == null) {
+		   throw new PersistentException("PER-001", "No hay informacion de los filtros");
+		}
+		if(filter.get(ColumnFields.ACCESS_TOKEN) != null) {
+		   sql.append(" AND p.token = '")
+		   	  .append( filter.get(ColumnFields.ACCESS_TOKEN) )
+		      .append("'");
+		}
+	}
+	
 }

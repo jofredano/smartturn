@@ -12,6 +12,7 @@ import co.org.smartturn.data.transfer.adapter.DateAdapter;
 import co.org.smartturn.data.transfer.fields.ColumnFields;
 import co.org.smartturn.data.transfer.structure.ObjectMap;
 import co.org.smartturn.exception.transfer.MapperException;
+import co.org.smartturn.persistent.vo.VOProfile;
 import co.org.smartturn.utils.Utilities;
 
 /***
@@ -195,7 +196,18 @@ public final class DTOProfile extends ObjectMap implements Profile<Long>, MapEnt
 
 	@Override
 	public MapEntity map(Class<?> name, MapEntity source) throws MapperException {
-		return null;
+		if(!name.getName().contains("Profile")) {
+		   throw new MapperException("PER-45029", "No se puede hacer el mappeo, no hay compatibilidad en el objeto");	
+		}
+		Profile<Long> object = new VOProfile();
+		object.put( ColumnFields.PROFILE_CODE 		, this.get(ColumnFields.PROFILE_CODE) );
+		object.put( ColumnFields.PROFILE_CREATER 	, this.get(ColumnFields.PROFILE_CREATER) );
+		object.put( ColumnFields.PROFILE_MODIFIER 	, this.get(ColumnFields.PROFILE_MODIFIER) );
+		object.put( ColumnFields.PROFILE_STATE 		, this.get(ColumnFields.PROFILE_STATE) );
+		object.put( ColumnFields.PROFILE_ROLE		, this.get(ColumnFields.PROFILE_ROLE) );
+		object.put( ColumnFields.PROFILE_CREATED 	, Utilities.toSqlDate( (java.util.Date)this.get(ColumnFields.PROFILE_CREATED)) );
+		object.put( ColumnFields.PROFILE_MODIFIED 	, Utilities.toSqlDate( (java.util.Date)this.get(ColumnFields.PROFILE_MODIFIED)) );
+		return object;
 	}
 	
 }

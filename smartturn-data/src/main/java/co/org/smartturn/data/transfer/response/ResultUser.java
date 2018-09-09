@@ -1,13 +1,12 @@
 package co.org.smartturn.data.transfer.response;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import co.org.smartturn.data.model.response.Result;
+import co.org.smartturn.data.transfer.DTOUser;
+import co.org.smartturn.data.transfer.structure.ObjectMap;
 
 /**
  * Clase que controla respuestas de procesos.
@@ -16,26 +15,22 @@ import co.org.smartturn.data.model.response.Result;
  *
  */
 @XmlRootElement
-public final class ResponseProcess implements Result<Integer> {
+public final class ResultUser extends ObjectMap implements Result<DTOUser> {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Contenido de la respuesta entregada.
 	 */
-	@XmlElementWrapper (name = "content")
-    @XmlElement (name = "item")
-	protected ArrayList<Integer> content;
+	private List<DTOUser> content;
 	
 	/**
 	 * Dimension de la respuesta.
 	 */
-	@XmlElement(name = "size")
-	protected long size;
+	private long size;
 
-	
 	@Override
-	public List<Integer> getContent() {
+	public List<DTOUser> getContent() {
 		return content;
 	}
 
@@ -45,13 +40,13 @@ public final class ResponseProcess implements Result<Integer> {
 	}
 
 	@Override
-	public void setContent(List<Integer> content) {
-		this.content = (ArrayList<Integer>) content;
+	public void setContent(List<DTOUser> content) {
+		this.content = content;
 	}
 
 	@Override
 	public void setSize(long size) {
 		this.size = size;
 	}
-
+	
 }

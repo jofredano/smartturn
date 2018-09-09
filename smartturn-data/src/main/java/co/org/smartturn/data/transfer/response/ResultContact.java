@@ -5,24 +5,23 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import co.org.smartturn.data.model.response.Result;
-import co.org.smartturn.data.transfer.DTOUser;
-import co.org.smartturn.data.transfer.structure.ObjectMap;
+import co.org.smartturn.data.transfer.DTOContact;
 
 /**
- * Clase que controla respuestas de procesos.
+ * Objeto de respuesta 
  * 
  * @author joseanor
  *
  */
 @XmlRootElement
-public final class ResponseUser extends ObjectMap implements Result<DTOUser> {
+public class ResultContact implements Result<DTOContact> {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Contenido de la respuesta entregada.
 	 */
-	private List<DTOUser> content;
+	private List<DTOContact> content;
 	
 	/**
 	 * Dimension de la respuesta.
@@ -30,8 +29,13 @@ public final class ResponseUser extends ObjectMap implements Result<DTOUser> {
 	private long size;
 
 	@Override
-	public List<DTOUser> getContent() {
+	public List<DTOContact> getContent() {
 		return content;
+	}
+
+	@Override
+	public void setContent(List<DTOContact> content) {
+		this.content = content;
 	}
 
 	@Override
@@ -40,13 +44,8 @@ public final class ResponseUser extends ObjectMap implements Result<DTOUser> {
 	}
 
 	@Override
-	public void setContent(List<DTOUser> content) {
-		this.content = content;
-	}
-
-	@Override
 	public void setSize(long size) {
 		this.size = size;
 	}
-	
+
 }
