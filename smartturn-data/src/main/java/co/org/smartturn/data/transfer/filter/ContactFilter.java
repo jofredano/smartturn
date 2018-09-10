@@ -13,13 +13,13 @@ import co.org.smartturn.exception.transfer.MapperException;
 
 /**
  * Esta clase controla el objeto que sirve como filtro para hacer busquedas
- * de usuario.
+ * de contactos.
  * 
  * @author joseanor
  *
  */
 @XmlRootElement
-public final class UserFilter extends ObjectMap implements MapEntity {
+public final class ContactFilter extends ObjectMap implements MapEntity {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -48,12 +48,6 @@ public final class UserFilter extends ObjectMap implements MapEntity {
 	private String secondLastname;
 
 	/**
-	 * Nombre de usuario
-	 */
-	@XmlElement(name = "username")
-	private String username;
-
-	/**
 	 * Identificacion del contacto.
 	 */
 	@XmlElement(name = "identification")
@@ -70,6 +64,7 @@ public final class UserFilter extends ObjectMap implements MapEntity {
 	 */
 	@XmlElement(name = "created")
 	private RangeDate created;
+
 
 	public String getFirstname() {
 		return firstname;
@@ -111,14 +106,6 @@ public final class UserFilter extends ObjectMap implements MapEntity {
 		this.identification = identification;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	public RangeDate getBirthday() {
 		return birthday;
 	}
@@ -134,40 +121,23 @@ public final class UserFilter extends ObjectMap implements MapEntity {
 	public void setCreated(RangeDate created) {
 		this.created = created;
 	}
-	
+
 	@Override
-	public String toString() {
-		return "UserFilter [firstname=" + firstname + ", secondname=" + secondname + ", firstLastname=" + firstLastname
-				+ ", secondLastname=" + secondLastname + ", identification=" + identification + ", username=" + username
-				+ ", birthday=" + birthday + ", created=" + created + "]";
+	public MapEntity map(Class<?> name, MapEntity source) throws MapperException {
+		return null;
 	}
-	
-	@Override
-	public Field[] getFields() { 
-		return new ColumnFilter[] {
-			ColumnFilter.USER_BIRTHDAY,
-			ColumnFilter.USER_FIRSTNAME,
-			ColumnFilter.USER_SECONDNAME,
-			ColumnFilter.USER_FIRSTLASTNAME,
-			ColumnFilter.USER_SECONDLASTNAME,
-			ColumnFilter.USER_IDENTIFICATION,
-			ColumnFilter.USER_CREATED,
-			ColumnFilter.USER_NAME
-		}; 
-	}
-	
+
 	@Override
 	public Serializable get(Field field) {
 		ColumnFilter filter = (ColumnFilter)field;
 		switch(filter) {
-			case USER_NAME 		  		: return getUsername();
-			case USER_BIRTHDAY 	  		: return getBirthday();
-			case USER_FIRSTNAME   		: return getFirstname();
-			case USER_SECONDNAME  		: return getSecondname();
-			case USER_FIRSTLASTNAME 	: return getFirstLastname();
-			case USER_SECONDLASTNAME	: return getSecondLastname();
-			case USER_IDENTIFICATION	: return getIdentification();
-			case USER_CREATED 			: return getCreated();
+			case CONTACT_BIRTHDAY 	  		: return getBirthday();
+			case CONTACT_FIRSTNAME   		: return getFirstname();
+			case CONTACT_SECONDNAME  		: return getSecondname();
+			case CONTACT_FIRSTLASTNAME 	: return getFirstLastname();
+			case CONTACT_SECONDLASTNAME	: return getSecondLastname();
+			case CONTACT_IDENTIFICATION	: return getIdentification();
+			case CONTACT_CREATED 			: return getCreated();
 			default 					: return null;
 		}
 	}
@@ -176,21 +146,28 @@ public final class UserFilter extends ObjectMap implements MapEntity {
 	public void put(Field field, Serializable value) {
 		ColumnFilter filter = (ColumnFilter)field;
 		switch(filter) {
-			case USER_NAME 		  		: setUsername( (String)value ); break;
-			case USER_BIRTHDAY 	  		: setBirthday( (RangeDate)value ); break;
-			case USER_FIRSTNAME   		: setFirstname( (String)value ); break;
-			case USER_SECONDNAME  		: setSecondname( (String)value ); break;
-			case USER_FIRSTLASTNAME 	: setFirstLastname( (String)value ); break;
-			case USER_SECONDLASTNAME	: setSecondLastname( (String)value ); break;
-			case USER_IDENTIFICATION	: setIdentification( (DTODocument)value ); break;
-			case USER_CREATED 			: setCreated( (RangeDate)value ); break;
+			case CONTACT_BIRTHDAY 	  		: setBirthday( (RangeDate)value ); break;
+			case CONTACT_FIRSTNAME   		: setFirstname( (String)value ); break;
+			case CONTACT_SECONDNAME  		: setSecondname( (String)value ); break;
+			case CONTACT_FIRSTLASTNAME 	: setFirstLastname( (String)value ); break;
+			case CONTACT_SECONDLASTNAME	: setSecondLastname( (String)value ); break;
+			case CONTACT_IDENTIFICATION	: setIdentification( (DTODocument)value ); break;
+			case CONTACT_CREATED 			: setCreated( (RangeDate)value ); break;
 			default 					: break;
 		}
 	}
-
+	
 	@Override
-	public MapEntity map(Class<?> name, MapEntity source) throws MapperException {
-		return null;
+	public Field[] getFields() {
+		return new ColumnFilter[] {
+			ColumnFilter.CONTACT_BIRTHDAY,
+			ColumnFilter.CONTACT_FIRSTNAME,
+			ColumnFilter.CONTACT_SECONDNAME,
+			ColumnFilter.CONTACT_FIRSTLASTNAME,
+			ColumnFilter.CONTACT_SECONDLASTNAME,
+			ColumnFilter.CONTACT_IDENTIFICATION,
+			ColumnFilter.CONTACT_CREATED
+		};
 	}
 
 	/**
@@ -200,14 +177,13 @@ public final class UserFilter extends ObjectMap implements MapEntity {
 	 *
 	 */
 	public enum ColumnFilter implements Field {
-		USER_NAME("alias"),
-		USER_BIRTHDAY("nacimiento"),
-		USER_FIRSTNAME("primerNombre"),
-		USER_SECONDNAME("segundoNombre"),
-		USER_FIRSTLASTNAME("primerApellido"),
-		USER_SECONDLASTNAME("segundoApellido"),
-		USER_CREATED("creado"),
-		USER_IDENTIFICATION("identificacion");
+		CONTACT_BIRTHDAY("nacimiento"),
+		CONTACT_FIRSTNAME("primerNombre"),
+		CONTACT_SECONDNAME("segundoNombre"),
+		CONTACT_FIRSTLASTNAME("primerApellido"),
+		CONTACT_SECONDLASTNAME("segundoApellido"),
+		CONTACT_CREATED("creado"),
+		CONTACT_IDENTIFICATION("identificacion");
 		
 		/**
 		 * Nombre del campo
@@ -233,5 +209,4 @@ public final class UserFilter extends ObjectMap implements MapEntity {
 			return null;
 		}
 	}
-
 }

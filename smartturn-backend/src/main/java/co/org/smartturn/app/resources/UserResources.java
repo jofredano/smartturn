@@ -78,8 +78,10 @@ public class UserResources extends RestResources {
      * Permite consultar la informacion de los usuarios
      * @return	Response
      */
-	@RequestMapping( value = "/filter",  method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Serializable> filterUser(@RequestBody UserFilter filter) {
+	@RequestMapping( value    = "/filter",  
+					 method   = RequestMethod.POST, 
+					 consumes = MediaType.APPLICATION_JSON_VALUE )
+	public ResponseEntity<Serializable> filterUser(@RequestBody UserFilter filter) {
     	try {
             return ResponseEntity
             		.ok()
@@ -96,8 +98,10 @@ public class UserResources extends RestResources {
      * @param 	credential	Informacin de credenciales
      * @return	Response
      */
-	@RequestMapping( value = "/login",  method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Serializable> login(@RequestBody DTOCredential credential) {
+	@RequestMapping( value     = "/login",  
+					 method    = RequestMethod.POST, 
+					 consumes  = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Serializable> login(@RequestBody DTOCredential credential) {
     	try {
             return ResponseEntity
             		.ok()

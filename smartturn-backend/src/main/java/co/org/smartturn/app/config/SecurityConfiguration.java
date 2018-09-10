@@ -49,7 +49,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
 	 * Filtro de autenticacion y autorizacion.
 	 **/
 	@Bean
-	public FilterRegistrationBean<AuthenticationFilter> configSecurityFilter() {
+	public FilterRegistrationBean<AuthenticationFilter> securityFilter() {
         FilterRegistrationBean<AuthenticationFilter> registration = new FilterRegistrationBean<>();
         registration.setDispatcherTypes(EnumSet.allOf(DispatcherType.class));
         registration.setFilter(new AuthenticationFilter());
