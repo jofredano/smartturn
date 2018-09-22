@@ -53,6 +53,11 @@ configurations {
     integrationTestRuntime.extendsFrom testRuntime
 }
 dependencies {
+	//Proyectos dependientes
+	compile project(':smartturn-business')
+    compile project(':smartturn-persistent')
+    compile project(':smartturn-data')
+    compile project(':smartturn-utils')
 	//-- Dependencias spring boot base
 	compile('org.springframework.boot:spring-boot-starter')
 	compile('org.springframework.boot:spring-boot-configuration-processor')
@@ -62,16 +67,16 @@ dependencies {
     }
     //Se incluyo para temas del embebido de tomcat...	
 	compile('org.springframework.boot:spring-boot-starter-tomcat')
-	compile('org.apache.tomcat.embed:tomcat-embed-core')
-	compile('org.apache.tomcat.embed:tomcat-embed-el')
-	compile('org.apache.tomcat:tomcat-annotations-api')
+	//compile('org.apache.tomcat.embed:tomcat-embed-core')
+	//compile('org.apache.tomcat.embed:tomcat-embed-el')
+	//compile('org.apache.tomcat:tomcat-annotations-api')
 	//Manejo de transacciones
-    compile('org.springframework:spring-orm:4.1.6.RELEASE')
+    //compile('org.springframework:spring-orm:4.1.6.RELEASE')
 	//-- Librerias utilitarias
 	compile('commons-io:commons-io:2.6')
 	//-- Cache
-	compile('net.sf.ehcache:ehcache:2.10.4')	
-	compile('org.springframework:spring-context-support:4.2.3.RELEASE')
+	//compile('net.sf.ehcache:ehcache:2.10.4')	
+	//compile('org.springframework:spring-context-support:4.2.3.RELEASE')
 	//Incluidas dependencias
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.data:spring-data-jpa')
@@ -97,11 +102,6 @@ dependencies {
 	//-- Pruebas
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	integrationTestCompile 'org.assertj:assertj-core:3.0.0'
-	//Proyectos dependientes
-	compile project(':smartturn-business')
-    compile project(':smartturn-persistent')
-    compile project(':smartturn-data')
-    compile project(':smartturn-utils')
 }
 
 task integrationTest(type: Test) {

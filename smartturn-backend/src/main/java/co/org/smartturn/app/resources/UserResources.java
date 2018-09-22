@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.org.smartturn.app.RestResources;
+import co.org.smartturn.app.services.UserServices;
 import co.org.smartturn.data.model.User;
 import co.org.smartturn.data.transfer.DTOProfile;
 import co.org.smartturn.data.transfer.filter.UserFilter;
 import co.org.smartturn.data.transfer.security.DTOCredential;
 import co.org.smartturn.exception.SystemException;
 import co.org.smartturn.exception.data.Descriptor;
-import co.org.smartturn.services.UserServices;
 
 /**
  * Define los recursos disponibles para los usuarios

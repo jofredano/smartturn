@@ -28,7 +28,7 @@ import co.org.smartturn.utils.Utilities;
  * @author joseanor
  *
  */
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = "contact", propOrder = {
 		"code",
 		"type",

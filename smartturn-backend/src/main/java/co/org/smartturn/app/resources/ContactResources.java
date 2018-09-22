@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.org.smartturn.app.RestResources;
+import co.org.smartturn.app.services.ContactServices;
 import co.org.smartturn.data.transfer.filter.ContactFilter;
 import co.org.smartturn.exception.SystemException;
-import co.org.smartturn.services.ContactServices;
 
 /**
  * Define los recursos disponibles para los contactos
@@ -24,7 +24,7 @@ import co.org.smartturn.services.ContactServices;
  *
  */
 @RestController 
-@RequestMapping("/smartservicesd/contacts")
+@RequestMapping("/smartservices/contacts")
 public class ContactResources extends RestResources {
 	
 	/**

@@ -1,6 +1,7 @@
 package co.org.smartturn.app.config.security;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -8,10 +9,11 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.stereotype.Component;
+import co.org.smartturn.utils.Utilities;
 
 /**
  * Clase encargada de controlar la seguridad de los servicios.
@@ -19,7 +21,7 @@ import org.springframework.stereotype.Component;
  * @author joseanor
  *
  */
-@Component
+@WebFilter("/rest/*")
 public class AuthenticationFilter implements Filter {
 	
 	/**
@@ -40,6 +42,7 @@ public class AuthenticationFilter implements Filter {
         System.err.println("Logging Request : " + request.getRequestURI() + " => " + request.getMethod());
         System.err.println("Remote Host     : " + request.getRemoteHost());
         System.err.println("Remote Address  : " + request.getRemoteAddr());
+        validateHeader( request );
 		response.setHeader("Access-Control-Allow-Origin"   , "*");
 		response.setHeader("Access-Control-Allow-Methods"  , "POST, GET, PUT, OPTIONS, DELETE");
 		response.setHeader("Access-Control-Max-Age"        , "3600");
@@ -52,5 +55,19 @@ public class AuthenticationFilter implements Filter {
 		//Implementacion
 	}
 
+	/**
+	 * Valida las credenciales suministradas en el servicio
+	 * @param 	request		Informacion de la peticion
+	 * @return	boolean
+	 */
+	protected boolean validateHeader(HttpServletRequest request) {
+		Enumeration<String> headers = request.getHeaderNames();
+        if (Utilities.isEmpty(headers)) {
+            while (headers.hasMoreElements()) {
+               System.out.println("Header: " + request.getHeader(headers.nextElement()));
+            }
+        }
+		return true;
+	}
 }
 

@@ -1,4 +1,4 @@
-package co.org.smartturn.services;
+package co.org.smartturn.app.services;
 
 import co.org.smartturn.data.model.User;
 import co.org.smartturn.data.model.response.Response;

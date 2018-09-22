@@ -1,10 +1,12 @@
 package co.org.smartturn.app;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
+
+import co.org.smartturn.app.config.BasicConfiguration;
+import co.org.smartturn.app.config.SecurityConfiguration;
+import co.org.smartturn.app.config.ServerConfiguration;
 
 /**
  * Clase que define la configuracion de la aplicacion web.
@@ -13,14 +15,11 @@ import org.springframework.context.annotation.ComponentScan;
  *
  */
 @SpringBootApplication()
-@ComponentScan(
-   basePackages = { 
-	 "co.org.smartturn.app",
-	 "co.org.smartturn.business",
-	 "co.org.smartturn.services",
-	 "co.org.smartturn.persistent.dao"
+@Import(value = { 
+	BasicConfiguration.class, 
+	SecurityConfiguration.class, 
+	ServerConfiguration.class 
 })
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 public class Application {
 	
 	/**

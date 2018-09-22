@@ -1,9 +1,10 @@
-package co.org.smartturn.services.impl;
+package co.org.smartturn.app.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import co.org.smartturn.app.services.UserServices;
 import co.org.smartturn.business.UserBusiness;
 import co.org.smartturn.data.model.User;
 import co.org.smartturn.data.model.response.Response;
@@ -15,7 +16,6 @@ import co.org.smartturn.data.transfer.DTOUser;
 import co.org.smartturn.data.transfer.Pageable;
 import co.org.smartturn.data.transfer.security.DTOAccess;
 import co.org.smartturn.exception.SystemException;
-import co.org.smartturn.services.UserServices;
 
 /**
  * Objeto del servicio asociado a los usuarios. 
