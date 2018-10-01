@@ -33,9 +33,6 @@ dependencies {
     compile project(':smartturn-utils')
 	//Spring-boot
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "${springBootVersion}"
-	//Persistencia
-	compile('org.hibernate:hibernate-core')
-	compile('org.hibernate:hibernate-hikaricp:5.2.12.Final')
  	//-- SuraLogger 	
     compile 'com.sun.jersey:jersey-client:1.19'
  	compile 'com.sun.jersey:jersey-core:1.19'

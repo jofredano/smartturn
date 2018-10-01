@@ -30,11 +30,8 @@ dependencies {
    	//-- Proyectos dependientes
     compile project(':smartturn-data')
     compile project(':smartturn-utils')
-	//Spring-boot
-	compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
-	//Persistencia
-	compile('org.hibernate:hibernate-core')
-	compile('org.hibernate:hibernate-hikaricp:5.2.12.Final')
+	//Spring-boot JPA
+	compile ("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
  	//-- SuraLogger 	
     compile 'com.sun.jersey:jersey-client:1.19'
  	compile 'com.sun.jersey:jersey-core:1.19'

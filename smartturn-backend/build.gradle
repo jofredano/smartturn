@@ -67,22 +67,11 @@ dependencies {
     }
     //Se incluyo para temas del embebido de tomcat...	
 	compile('org.springframework.boot:spring-boot-starter-tomcat')
-	//compile('org.apache.tomcat.embed:tomcat-embed-core')
-	//compile('org.apache.tomcat.embed:tomcat-embed-el')
-	//compile('org.apache.tomcat:tomcat-annotations-api')
-	//Manejo de transacciones
-    //compile('org.springframework:spring-orm:4.1.6.RELEASE')
+	//Incluidas dependencias para jpa
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	//Fin de dependencias 
 	//-- Librerias utilitarias
 	compile('commons-io:commons-io:2.6')
-	//-- Cache
-	//compile('net.sf.ehcache:ehcache:2.10.4')	
-	//compile('org.springframework:spring-context-support:4.2.3.RELEASE')
-	//Incluidas dependencias
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile('org.springframework.data:spring-data-jpa')
-	//Fin de dependencias 
-	compile('org.hibernate:hibernate-core:5.2.12.Final')
-	compile('org.hibernate:hibernate-hikaricp:5.2.12.Final')
 	compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.1.1'
 	compile('com.zaxxer:HikariCP:2.6.0')
 	// Seus	

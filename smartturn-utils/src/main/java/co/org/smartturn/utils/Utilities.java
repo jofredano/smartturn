@@ -330,7 +330,7 @@ public final class Utilities {
 	 * @throws  MapperException 
 	 */
 	@SuppressWarnings("unchecked")
-	public static <S extends MapEntity, T extends MapEntity> List<T> toArray(List<S> source, Class<?> name) throws  MapperException {
+	public static <S extends MapEntity, T extends MapEntity> List<T> toArray(Iterable<S> source, Class<?> name) throws  MapperException {
 		List<T> items = new ArrayList<>();
 		if(!Utilities.isEmpty(source)) {
 		   for(S item : source) {

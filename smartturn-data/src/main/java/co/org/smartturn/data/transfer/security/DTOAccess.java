@@ -13,9 +13,9 @@ import co.org.smartturn.data.transfer.DTOUser;
 import co.org.smartturn.data.transfer.adapter.DateAdapter;
 import co.org.smartturn.data.transfer.fields.ColumnFields;
 import co.org.smartturn.data.transfer.structure.ObjectMap;
+import co.org.smartturn.domain.vo.VOAccess;
+import co.org.smartturn.domain.vo.VOUser;
 import co.org.smartturn.exception.transfer.MapperException;
-import co.org.smartturn.persistent.vo.VOUser;
-import co.org.smartturn.persistent.vo.security.VOAccess;
 import co.org.smartturn.utils.Utilities;
 
 /**

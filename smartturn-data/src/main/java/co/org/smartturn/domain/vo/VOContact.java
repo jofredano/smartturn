@@ -1,162 +1,127 @@
-package co.org.smartturn.data.transfer;
+package co.org.smartturn.domain.vo;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import co.org.smartturn.data.model.Contact;
 import co.org.smartturn.data.structure.Field;
 import co.org.smartturn.data.structure.MapEntity;
-import co.org.smartturn.data.transfer.adapter.DateAdapter;
+import co.org.smartturn.data.transfer.DTOContact;
+import co.org.smartturn.data.transfer.DTOReference;
 import co.org.smartturn.data.transfer.fields.ColumnFields;
-import co.org.smartturn.data.transfer.structure.DTODocument;
 import co.org.smartturn.data.transfer.structure.ObjectMap;
-import co.org.smartturn.domain.vo.VOContact;
-import co.org.smartturn.domain.vo.VOReference;
 import co.org.smartturn.exception.transfer.MapperException;
 import co.org.smartturn.utils.Utilities;
 
 /**
- * Implementacion del objeto contacto.
+ * Objeto que representa en base de datos un contacto.
  * 
  * @author joseanor
  *
  */
-@XmlAccessorType(XmlAccessType.NONE)
-public final class DTOContact extends ObjectMap implements Contact<DTOReference> {
+@Entity
+@Table(name = "tb_contactos", schema = "smartturndb", 
+ uniqueConstraints = @UniqueConstraint(columnNames = { "codigo" }) )
+public class VOContact extends ObjectMap implements Contact<VOReference> {
 
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Representa el codigo del perfil
+	 */
+	@Id
+	@Column(name = "codigo")
+	private Long code;
 	
 	/**
-	 * Fecha de creacion.
+	 * Representa la fecha en que fue creado el perfil
 	 */
-	private java.util.Date created;
+	@Column(name = "creado")
+	private java.sql.Date created;
+	
+	/**
+	 * Representa la fecha en que fue modificado el perfil
+	 */
+	@Column(name = "modificado")
+	private java.sql.Date modified;
 
 	/**
-	 * Fecha de modificacion.
+	 * Representa el estado del perfil
 	 */
-	private java.util.Date modified;
-
-	/**
-	 * Fecha de nacimiento.
-	 */
-	private java.util.Date birth;
-
-	/**
-	 * Estado del contacto.
-	 */
+	@Column(name = "estado")
 	private Long state;
-
+	
 	/**
-	 * Usuario que creo el contacto.
+	 * Representa el codigo del usuario creador
 	 */
+	@Column(name = "creador")
 	private Long creater;
-
+	
 	/**
-	 * Usuario que realizo la ultima modificacion.
+	 * Representa el codigo del usuario modificador
 	 */
+	@Column(name = "modificador")
 	private Long modifier;
+	
+	/**
+	 * Representa el tipo de contacto
+	 */
+	@Column(name = "tipo")
+	private Long type;	
+	
+	/**
+	 * Representa la identificacion del contacto
+	 */
+	@Column(name = "identificacion")
+	private String identification;
 
 	/**
-	 * Codigo unico del contacto.
+	 * Representa el primer nombre
 	 */
-	private Long code;
-
-	/**
-	 * Tipo de contacto.
-	 */
-	private Long type;
-
-	/**
-	 * Identificacion del contacto.
-	 */
-	private DTODocument identification;
-
-	/**
-	 * Primer nombre.
-	 */
+	@Column(name = "primer_nombre")
 	private String firstname;
 
 	/**
-	 * Segundo nombre.
+	 * Representa el segundo nombre
 	 */
+	@Column(name = "segundo_nombre")
 	private String secondname;
 
 	/**
-	 * Primer apellido.
+	 * Representa el primer apellido
 	 */
+	@Column(name = "primer_apellido")
 	private String firstLastname;
 
 	/**
-	 * Segundo apellido.
+	 * Representa el segundo apellido
 	 */
+	@Column(name = "segundo_apellido")
 	private String secondLastname;
 
 	/**
-	 * Referencias del contacto.
+	 * Representa el segundo apellido
 	 */
-	@XmlElement(name = "references")
-	private List<DTOReference> references;
+	@Column(name = "nacimiento")
+	private java.sql.Date birth;
 
-	@XmlElement(name = "created")
-    @XmlJavaTypeAdapter( DateAdapter.class )
-	@Override
-	public Date getCreated() {
-		return created;
-	}
+	/**
+	 * Representa la lista de referencias que puede tener este contacto
+	 */
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "contacto", referencedColumnName = "codigo")
+	private List<VOReference> references;
 
-	@Override
-	public void setCreated(Serializable created) {
-		this.created = (Date) created;
-	}
-
-	@XmlElement(name = "modified")
-    @XmlJavaTypeAdapter( DateAdapter.class )
-	@Override
-	public Date getModified() {
-		return modified;
-	}
-
-	@Override
-	public void setModified(Serializable modified) {
-		this.modified = (Date) modified;
-	}
-
-	@Override
-	public Serializable getState() {
-		return state;
-	}
-
-	@Override
-	public void setState(Serializable state) {
-		this.state = (Long)state;
-	}
-
-	@Override
-	public Serializable getCreater() {
-		return creater;
-	}
-
-	@Override
-	public void setCreater(Serializable creater) {
-		this.creater = (Long) creater;
-	}
-
-	@Override
-	public Serializable getModifier() {
-		return modifier;
-	}
-
-	@Override
-	public void setModifier(Serializable modifier) {
-		this.modifier = (Long)modifier;
-	}
-	
 	@Override
 	public long getCode() {
 		return code;
@@ -176,18 +141,65 @@ public final class DTOContact extends ObjectMap implements Contact<DTOReference>
 	public void setType(Serializable type) {
 		this.type = (Long)type;
 	}
+	
+	@Override
+	public java.sql.Date getCreated() {
+		return created;
+	}
 
 	@Override
-	public DTODocument getIdentification() {
+	public void setCreated(Serializable created) {
+		this.created = (java.sql.Date)created;
+	}
+
+	@Override
+	public java.sql.Date getModified() {
+		return modified;
+	}
+
+	@Override
+	public void setModified(Serializable modified) {
+		this.modified = (java.sql.Date)modified;
+	}
+
+	@Override
+	public Long getState() {
+		return state;
+	}
+
+	@Override
+	public void setState(Serializable state) {
+		this.state = (Long)state;
+	}
+
+	@Override
+	public Long getCreater() {
+		return creater;
+	}
+
+	@Override
+	public void setCreater(Serializable creater) {
+		this.creater = (Long)creater;
+	}
+
+	@Override
+	public Long getModifier() {
+		return modifier;
+	}
+
+	@Override
+	public void setModifier(Serializable modifier) {
+		this.modifier = (Long)modifier;
+	}
+
+	@Override
+	public String getIdentification() {
 		return identification;
 	}
 
 	@Override
 	public void setIdentification(Serializable identification) {
-		if(identification instanceof String) {
-		   identification   = DTODocument.valueOf((String)identification);	
-		}
-		this.identification = (DTODocument) identification;
+		this.identification = (String)identification;
 	}
 
 	@Override
@@ -230,41 +242,26 @@ public final class DTOContact extends ObjectMap implements Contact<DTOReference>
 		this.secondLastname = secondLastname;
 	}
 
-	@XmlElement(name = "birth")
-    @XmlJavaTypeAdapter( DateAdapter.class )
 	@Override
-	public Date getBirth() {
+	public java.sql.Date getBirth() {
 		return birth;
 	}
 
 	@Override
 	public void setBirth(Serializable birth) {
-		this.birth = (Date) birth;
+		this.birth = (java.sql.Date)birth;
 	}
 
 	@Override
-	public List<DTOReference> getReferences() {
+	public List<VOReference> getReferences() {
 		return references;
 	}
 
 	@Override
-	public void setReferences(List<DTOReference> references) {
+	public void setReferences(List<VOReference> references) {
 		this.references = references;
 	}
-	
-	@Override
-	public int hashCode( ) {
-		return  code.hashCode() + identification.hashCode();
-	}
-	
-	@Override
-	public boolean equals(Object object) {
-		if(object == null || object.getClass() != this.getClass()) {
-		   return false;
-		}
-		return (this.hashCode() == ((DTOContact)object).hashCode());
-	}
-	
+
 	@Override
 	public Serializable get(Field field) {
 		ColumnFields column = (ColumnFields)field;	
@@ -275,7 +272,7 @@ public final class DTOContact extends ObjectMap implements Contact<DTOReference>
 			case CONTACT_SECONDLASTNAME :  return getSecondLastname( );  
 			case CONTACT_IDENTIFICATION :  return getIdentification( );  
 			case CONTACT_CODE 			:  return getCode( );  
-			case CONTACT_REFERENCES 	:  return (Serializable) getReferences( );  
+			case CONTACT_REFERENCES 	:  return (Serializable) getReferences();  
 			case CONTACT_CREATED 		:  return getCreated( );  
 			case CONTACT_CREATER 		:  return getCreater( );  
 			case CONTACT_MODIFIED 		:  return getModified( );  
@@ -283,29 +280,6 @@ public final class DTOContact extends ObjectMap implements Contact<DTOReference>
 			case CONTACT_TYPE 			:  return getType(  );  
 			case CONTACT_BIRTHDAY 		:  return getBirth( );  
 			case CONTACT_STATE 			:  return getState( ); 
-			default						:  return null;	
-		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T extends Object> Class<T> type(Field field) {
-		ColumnFields column = (ColumnFields)field;	
-		switch(column) {
-			case CONTACT_FIRSTNAME  	:  return (Class<T>) Utilities.getType(firstname		, String.class);  
-			case CONTACT_SECONDNAME 	:  return (Class<T>) Utilities.getType(secondname		, String.class);  
-			case CONTACT_FIRSTLASTNAME 	:  return (Class<T>) Utilities.getType(firstLastname	, String.class);  
-			case CONTACT_SECONDLASTNAME :  return (Class<T>) Utilities.getType(secondLastname	, String.class);  
-			case CONTACT_IDENTIFICATION :  return (Class<T>) Utilities.getType(identification	, DTODocument.class);  
-			case CONTACT_CODE 			:  return (Class<T>) Utilities.getType(code				, Long.class);  
-			case CONTACT_REFERENCES 	:  return (Class<T>) Utilities.getType(references		, List.class);  
-			case CONTACT_CREATED 		:  return (Class<T>) Utilities.getType(created			, Date.class);  
-			case CONTACT_CREATER 		:  return (Class<T>) Utilities.getType(creater 			, Long.class);  
-			case CONTACT_MODIFIED 		:  return (Class<T>) Utilities.getType(modified			, Date.class);  
-			case CONTACT_MODIFIER 		:  return (Class<T>) Utilities.getType(modifier 		, Long.class);  
-			case CONTACT_TYPE 			:  return (Class<T>) Utilities.getType(type				, Long.class);  
-			case CONTACT_BIRTHDAY 		:  return (Class<T>) Utilities.getType(birth			, Date.class);  
-			case CONTACT_STATE 			:  return (Class<T>) Utilities.getType(state			, Long.class); 
 			default						:  return null;	
 		}
 	}
@@ -321,7 +295,7 @@ public final class DTOContact extends ObjectMap implements Contact<DTOReference>
 			case CONTACT_SECONDLASTNAME :  setSecondLastname( (String)value ); break; 
 			case CONTACT_IDENTIFICATION :  setIdentification( value ); break; 
 			case CONTACT_CODE 			:  setCode( (long)value ); break; 
-			case CONTACT_REFERENCES 	:  setReferences( (List<DTOReference>)value ); break; 
+			case CONTACT_REFERENCES 	:  setReferences( (ArrayList<VOReference>)value ); break; 
 			case CONTACT_CREATED 		:  setCreated( value ); break; 
 			case CONTACT_CREATER 		:  setCreater( value ); break; 
 			case CONTACT_MODIFIED 		:  setModified( value ); break; 
@@ -334,11 +308,11 @@ public final class DTOContact extends ObjectMap implements Contact<DTOReference>
 	}
 
 	@Override
-	public MapEntity map(Class<?> name, MapEntity source) throws MapperException {
+	public Contact<DTOReference> map(Class<?> name, MapEntity source) throws MapperException {
 		if(!name.getName().contains("Contact")) {
 		   throw new MapperException("PER-45029", "No se puede hacer el mappeo, no hay compatibilidad en el objeto");	
 		}
-		Contact<VOReference> object = new VOContact();
+		Contact<DTOReference> object = new DTOContact();
 		object.put( ColumnFields.CONTACT_FIRSTNAME  	, this.get(ColumnFields.CONTACT_FIRSTNAME) );
 		object.put( ColumnFields.CONTACT_SECONDNAME 	, this.get(ColumnFields.CONTACT_SECONDNAME) );
 		object.put( ColumnFields.CONTACT_FIRSTLASTNAME 	, this.get(ColumnFields.CONTACT_FIRSTLASTNAME) );
@@ -349,10 +323,10 @@ public final class DTOContact extends ObjectMap implements Contact<DTOReference>
 		object.put( ColumnFields.CONTACT_MODIFIER 		, this.get(ColumnFields.CONTACT_MODIFIER) );
 		object.put( ColumnFields.CONTACT_TYPE 			, this.get(ColumnFields.CONTACT_TYPE) );
 		object.put( ColumnFields.CONTACT_STATE 			, this.get(ColumnFields.CONTACT_STATE) );
-		object.put( ColumnFields.CONTACT_CREATED 		, Utilities.toSqlDate( (java.util.Date)this.get(ColumnFields.CONTACT_CREATED) ) );
-		object.put( ColumnFields.CONTACT_MODIFIED 		, Utilities.toSqlDate( (java.util.Date)this.get(ColumnFields.CONTACT_MODIFIED) ) );
-		object.put( ColumnFields.CONTACT_BIRTHDAY 		, Utilities.toSqlDate( (java.util.Date)this.get(ColumnFields.CONTACT_BIRTHDAY) ) );
-		object.put( ColumnFields.CONTACT_REFERENCES 	, (Serializable) Utilities.toArray(references, VOReference.class) );
+		object.put( ColumnFields.CONTACT_CREATED 		, Utilities.toUtilDate( (java.sql.Date)this.get(ColumnFields.CONTACT_CREATED) ) );
+		object.put( ColumnFields.CONTACT_MODIFIED 		, Utilities.toUtilDate( (java.sql.Date)this.get(ColumnFields.CONTACT_MODIFIED) ) );
+		object.put( ColumnFields.CONTACT_BIRTHDAY 		, Utilities.toUtilDate( (java.sql.Date)this.get(ColumnFields.CONTACT_BIRTHDAY) ) );
+		object.put( ColumnFields.CONTACT_REFERENCES 	, (Serializable) Utilities.toArray(references, DTOReference.class) );
 		return object;
 	}
 

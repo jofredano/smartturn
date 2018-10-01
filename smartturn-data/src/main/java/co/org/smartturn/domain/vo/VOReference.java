@@ -1,109 +1,121 @@
-package co.org.smartturn.data.transfer;
+package co.org.smartturn.domain.vo;
 
 import java.io.Serializable;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import co.org.smartturn.data.model.Reference;
 import co.org.smartturn.data.structure.Field;
 import co.org.smartturn.data.structure.MapEntity;
-import co.org.smartturn.data.transfer.adapter.DateAdapter;
+import co.org.smartturn.data.transfer.DTOReference;
 import co.org.smartturn.data.transfer.fields.ColumnFields;
 import co.org.smartturn.data.transfer.structure.ObjectMap;
-import co.org.smartturn.domain.vo.VOReference;
 import co.org.smartturn.exception.transfer.MapperException;
 import co.org.smartturn.utils.Utilities;
 
 /**
- * Implementacion del objeto de referencia.
+ * Objeto que representa en base de datos un contacto.
  * 
  * @author joseanor
  *
  */
-@XmlRootElement(name = "reference")
-public final class DTOReference extends ObjectMap implements Reference, MapEntity {
+@Entity
+@Table(name = "tb_referencias", schema = "smartturndb", 
+ uniqueConstraints = @UniqueConstraint(columnNames = { "codigo" }) )
+public class VOReference extends ObjectMap implements Reference {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Fecha de creacion.
+	 * Representa el codigo del perfil
 	 */
-	@XmlElement(name = "created")
-    @XmlJavaTypeAdapter( DateAdapter.class )
-	private java.util.Date created;
-
-	/**
-	 * Fecha de modificacion.
-	 */
-	@XmlElement(name = "modified")
-    @XmlJavaTypeAdapter( DateAdapter.class )
-	private java.util.Date modified;
+	@Id
+	@Column(name = "codigo")
+	private Long code;
 	
 	/**
-	 * Estado del contacto.
+	 * Representa la fecha en que fue creada la referencia
 	 */
+	@Column(name = "creado")
+	private java.sql.Date created;
+	
+	/**
+	 * Representa la fecha en que fue modificada la referencia
+	 */
+	@Column(name = "modificado")
+	private java.sql.Date modified;
+
+	/**
+	 * Representa el estado del perfil
+	 */
+	@Column(name = "estado")
 	private Long state;
-
+	
 	/**
-	 * Usuario que creo el contacto.
+	 * Representa el codigo del usuario creador
 	 */
+	@Column(name = "creador")
 	private Long creater;
-
+	
 	/**
-	 * Usuario que realizo la ultima modificacion.
+	 * Representa el codigo del usuario modificador
 	 */
+	@Column(name = "modificador")
 	private Long modifier;
-
+	
 	/**
-	 * Codigo unico del contacto.
+	 * Representa el tipo de la referencia
 	 */
-	private long code;
-
-	/**
-	 * Tipo de referencia.
-	 */
+	@Column(name = "tipo")
 	private Long type;
-
+	
 	/**
-	 * Valor de la referencia
+	 * Representa la categoria de la referencia
 	 */
-	private String value;
-
-	/**
-	 * Si este contacto tiene preferencia.
-	 */
-	private boolean preference;
-
-	/**
-	 * Categoria de la referencia.
-	 */
+	@Column(name = "categoria")
 	private Long category;
 	
 	/**
-	 * Referencia del contacto
+	 * Representa si tiene preferencia la referencia
 	 */
+	@Column(name = "preferencia")
+	private Boolean preference;
+	
+	/**
+	 * Representa el valor de la referencia
+	 */
+	@Column(name = "referencia")
+	private String value;
+	
+	/**
+	 * Informacion del contacto
+	 */
+	@Column(name = "contacto")
 	private Long contact;
 	
+
 	@Override
-	public java.util.Date getCreated() {
+	public java.sql.Date getCreated() {
 		return created;
 	}
 
 	@Override
 	public void setCreated(Serializable created) {
-		this.created = (java.util.Date) created;
+		this.created = (java.sql.Date)created;
 	}
 
 	@Override
-	public java.util.Date getModified() {
+	public java.sql.Date getModified() {
 		return modified;
 	}
 
 	@Override
 	public void setModified(Serializable modified) {
-		this.modified = (java.util.Date) modified;
+		this.modified = (java.sql.Date)modified;
 	}
 
 	@Override
@@ -185,28 +197,22 @@ public final class DTOReference extends ObjectMap implements Reference, MapEntit
 	public void setValue(String value) {
 		this.value = value;
 	}
-
+	
 	@Override
 	public Long getContact() {
 		return contact;
 	}
-
+	
 	@Override
 	public void setContact(Long contact) {
 		this.contact = contact;
 	}
 
 	@Override
-	public int hashCode( ) {
-		return  (Long.valueOf(code)).hashCode();
-	}
-	
-	@Override
-	public boolean equals(Object object) {
-		if(object == null || object.getClass() != this.getClass()) {
-		   return false;
-		}
-		return (this.hashCode() == ((DTOReference)object).hashCode());
+	public String toString() {
+		return "VOReference [code=" + code + ", created=" + created + ", modified=" + modified + ", state=" + state
+				+ ", creater=" + creater + ", modifier=" + modifier + ", type=" + type + ", category=" + category
+				+ ", preference=" + preference + ", value=" + value + ", contact=" + contact + "]";
 	}
 
 	@Override
@@ -246,11 +252,11 @@ public final class DTOReference extends ObjectMap implements Reference, MapEntit
 	}
 
 	@Override
-	public MapEntity map(Class<?> name, MapEntity source) throws MapperException {
+	public Reference map(Class<?> name, MapEntity source) throws MapperException {
 		if(!name.getName().contains("Reference")) {
 		   throw new MapperException("PER-45029", "No se puede hacer el mappeo, no hay compatibilidad en el objeto");	
 		}
-		Reference object = new VOReference();
+		Reference object = new DTOReference();
 		object.put( ColumnFields.REFERENCE_CODE			, this.get(ColumnFields.REFERENCE_CODE) );
 		object.put( ColumnFields.REFERENCE_TYPE 		, this.get(ColumnFields.REFERENCE_TYPE) );
 		object.put( ColumnFields.REFERENCE_CATEGORY 	, this.get(ColumnFields.REFERENCE_CATEGORY) );
@@ -259,8 +265,8 @@ public final class DTOReference extends ObjectMap implements Reference, MapEntit
 		object.put( ColumnFields.REFERENCE_STATE 		, this.get(ColumnFields.REFERENCE_STATE) );
 		object.put( ColumnFields.REFERENCE_CREATER 		, this.get(ColumnFields.REFERENCE_CREATER) );
 		object.put( ColumnFields.REFERENCE_MODIFIER 	, this.get(ColumnFields.REFERENCE_MODIFIER) );
-		object.put( ColumnFields.REFERENCE_CREATED 		, Utilities.toSqlDate( (java.util.Date)this.get(ColumnFields.REFERENCE_CREATED) ) );
-		object.put( ColumnFields.REFERENCE_MODIFIED 	, Utilities.toSqlDate( (java.util.Date)this.get(ColumnFields.REFERENCE_MODIFIED) ) );
+		object.put( ColumnFields.REFERENCE_CREATED 		, Utilities.toUtilDate( (java.sql.Date)this.get(ColumnFields.REFERENCE_CREATED) ) );
+		object.put( ColumnFields.REFERENCE_MODIFIED 	, Utilities.toUtilDate( (java.sql.Date)this.get(ColumnFields.REFERENCE_MODIFIED) ) );
 		return object;
 	}
 

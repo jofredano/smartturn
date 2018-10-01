@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Import;
 
 import co.org.smartturn.app.config.BasicConfiguration;
 import co.org.smartturn.app.config.SecurityConfiguration;
-import co.org.smartturn.app.config.ServerConfiguration;
 
 /**
  * Clase que define la configuracion de la aplicacion web.
@@ -18,7 +17,6 @@ import co.org.smartturn.app.config.ServerConfiguration;
 @Import(value = { 
 	BasicConfiguration.class, 
 	SecurityConfiguration.class, 
-	ServerConfiguration.class 
 })
 public class Application {
 	

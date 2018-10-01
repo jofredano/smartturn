@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import co.org.smartturn.app.services.ContactServices;
-import co.org.smartturn.business.ContactBusiness;
+import co.org.smartturn.components.ContactComponent;
 import co.org.smartturn.data.model.response.Result;
 import co.org.smartturn.data.structure.MapEntity;
 import co.org.smartturn.data.transfer.DTOContact;
@@ -25,12 +25,12 @@ public class ContactServicesImpl implements ContactServices {
 	 * Objeto de negocio para usuarios
 	 */
 	@Autowired
-	@Qualifier("contactBusinessImpl")
-	private ContactBusiness business;
+	@Qualifier("contactComponent")
+	private ContactComponent business;
 
 
 	@Override
-	public ContactBusiness getBusiness() {
+	public ContactComponent getBusiness() {
 		return business;
 	}
 

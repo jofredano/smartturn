@@ -1,10 +1,9 @@
-package co.org.smartturn.app.services.impl;
+package co.org.smartturn.components.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-import co.org.smartturn.app.services.UserServices;
 import co.org.smartturn.components.UserComponent;
 import co.org.smartturn.data.model.User;
 import co.org.smartturn.data.model.response.Response;
@@ -14,58 +13,72 @@ import co.org.smartturn.data.model.security.Credential;
 import co.org.smartturn.data.structure.MapEntity;
 import co.org.smartturn.data.transfer.DTOUser;
 import co.org.smartturn.data.transfer.Pageable;
+import co.org.smartturn.data.transfer.response.ResultUser;
 import co.org.smartturn.data.transfer.security.DTOAccess;
+import co.org.smartturn.domain.vo.VOUser;
 import co.org.smartturn.exception.SystemException;
+import co.org.smartturn.persistent.jpa.AccessRepository;
+import co.org.smartturn.persistent.jpa.UserRepository;
+import co.org.smartturn.persistent.specification.UtilitiesSpecification;
+import co.org.smartturn.utils.Utilities;
 
 /**
- * Objeto del servicio asociado a los usuarios. 
+ * Objeto de negocio de usuarios
  * 
  * @author joseanor
  *
  */
-@Service(value = "userServicesImpl")
-public final class UserServicesImpl implements UserServices {
+@Component(value = "userBusinessImpl")
+public class UserComponentImpl implements UserComponent {
 	
 	/**
-	 * Objeto de negocio para usuarios
+	 * Servicios de usuarios
 	 */
 	@Autowired
-	@Qualifier("userBusinessImpl")
-	private UserComponent business;
-	
-	@Override
-	public UserComponent getBusiness() {
-		return business;
-	}
+	@Qualifier("userRepository")
+	private UserRepository dao;
+
+	/**
+	 * Servicios de usuarios
+	 */
+	@Autowired
+	@Qualifier("accessRepository")
+	private AccessRepository control;
+
 
 	@Override
 	public Result<DTOUser> filter(MapEntity filter, Pageable paging) throws SystemException {
-		return getBusiness().filter(filter, paging);
+		Result<DTOUser> response = new ResultUser();
+		java.util.List<VOUser> jpa = dao.findAll( UtilitiesSpecification.isQueryMap(filter) );
+		response.setContent( Utilities.toArray(jpa, DTOUser.class) );
+		response.setSize( jpa.size() );
+		return response;
 	}
 
 	@Override
 	public Result<DTOUser> filter(MapEntity filter) throws SystemException {
-		return getBusiness().filter(filter);
+		return filter(filter, null);
 	}
 
 	@Override
 	public boolean update(User<?> user) throws SystemException {
-		return getBusiness().update(user);
+		return false;
 	}
 
 	@Override
 	public Response<DTOAccess> access(Credential credential) throws SystemException {
-		return getBusiness().access(credential);
+		return null;
 	}
 
 	@Override
 	public Response<Integer> logout(Access<java.util.Date, DTOUser> credential) throws SystemException {
-		return getBusiness().logout(credential);
+		//getRepository().logout(credential)
+		return null;
 	}
 
 	@Override
 	public boolean validate(Access<java.util.Date, DTOUser> credential) throws SystemException {
-		return getBusiness().validate(credential);
+		return false;
 	}
 
 }
