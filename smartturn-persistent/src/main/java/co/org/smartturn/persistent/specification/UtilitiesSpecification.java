@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.Specification;
 import co.org.smartturn.data.structure.MapEntity;
 import co.org.smartturn.data.transfer.filter.RangeDate;
 import co.org.smartturn.data.transfer.filter.UserFilter;
+import co.org.smartturn.data.transfer.structure.ObjectMap;
 import co.org.smartturn.domain.vo.VOUser;
 import co.org.smartturn.domain.vo.VOUser_;
 import co.org.smartturn.utils.Utilities;
@@ -39,25 +40,25 @@ public class UtilitiesSpecification {
 	public static Specification<VOUser> isQueryMap(MapEntity filter) {
 	    return new Specification<VOUser>() {
 			private static final long serialVersionUID = 1L;
-			public Predicate toPredicate( Root<VOUser> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-				Predicate predicate = null;
+			public Predicate toPredicate( Root<VOUser> root, CriteriaQuery<?> qc, CriteriaBuilder cb) {
+				java.util.List<Predicate> predicates = new java.util.ArrayList<>();
+				/*
+		USER_FIRSTNAME("primerNombre"),
+		USER_SECONDNAME("segundoNombre"),
+		USER_FIRSTLASTNAME("primerApellido"),
+		USER_SECONDLASTNAME("segundoApellido"),
+		USER_IDENTIFICATION("identificacion");
+		USER_BIRTHDAY
+				 * */
 				if(filter.get(UserFilter.ColumnFilter.USER_NAME) != null) {
-				   predicate = UtilitiesSpecification.prepareLike(
-						   UserFilter.ColumnFilter.USER_NAME, 
-						   VOUser_.username,
-						   filter, 
-						   root, 
-						   builder );
+				   predicates.add( UtilitiesSpecification.prepareLike(
+					  UserFilter.ColumnFilter.USER_NAME, VOUser_.username, filter, root, cb ) );
 				}
 				if(filter.get(UserFilter.ColumnFilter.USER_CREATED) != null) {
-				   predicate = UtilitiesSpecification.prepareBetweenRange(
-						   UserFilter.ColumnFilter.USER_CREATED, 
-						   VOUser_.created,
-						   filter, 
-						   root, 
-						   builder );
+				   predicates.add( UtilitiesSpecification.prepareBetweenRange(
+					  UserFilter.ColumnFilter.USER_CREATED, VOUser_.created, filter, root, cb ) );
 				}
-		        return predicate;
+				return cb.and(predicates.toArray(new Predicate[predicates.size()]));
 		    }
 	    };
 	}
@@ -72,7 +73,7 @@ public class UtilitiesSpecification {
 	 * @return 	Predicate
 	 */
 	@SuppressWarnings("unchecked")
-	protected static <E extends VOUser, Y extends java.sql.Date> Predicate prepareBetweenRange(
+	protected static <E extends ObjectMap, Y extends java.sql.Date> Predicate prepareBetweenRange(
 		UserFilter.ColumnFilter field, 
 		SingularAttribute<E, Y> attribute,
 		MapEntity 				filter, 
@@ -81,8 +82,8 @@ public class UtilitiesSpecification {
 	{
 		RangeDate range = (RangeDate)filter.get(field);
 		return builder.between(
-			root.get((SingularAttribute<? super VOUser, Y>) attribute), 
-			builder.literal( Utilities.toSqlDate( range.getBegin() ) ), 
+			root.get((SingularAttribute<? super ObjectMap, Y>) attribute), 
+			builder.literal( Utilities.toSqlDate( range.getBegin() )), 
 			builder.literal( Utilities.toSqlDate( range.getEnd() ) ));
 	}
 
@@ -96,7 +97,7 @@ public class UtilitiesSpecification {
 	 * @return	Predicate
 	 */
 	@SuppressWarnings("unchecked")
-	protected static <E extends VOUser, Y> Predicate prepareLike(
+	protected static <E extends ObjectMap, Y> Predicate prepareLike(
 		UserFilter.ColumnFilter field, 
 		SingularAttribute<E, Y> attribute,
 		MapEntity 				filter, 
@@ -104,7 +105,7 @@ public class UtilitiesSpecification {
 		CriteriaBuilder 		builder ) 
 	{
 		return builder.like(
-		  (Expression<String>) root.get( (SingularAttribute<? super VOUser, Y>) attribute ), 
+		  (Expression<String>) root.get( (SingularAttribute<? super ObjectMap, Y>) attribute ), 
 		  builder.lower( builder.concat(
 			builder.concat(
 				builder.literal("%"), 
