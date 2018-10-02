@@ -1,7 +1,7 @@
 package co.org.smartturn.definitions.database.jpa;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.repository.CrudRepository;
 
 
 /**
@@ -12,6 +12,6 @@ import org.springframework.data.repository.CrudRepository;
  *
  */
 public interface EntityRepository<E extends java.io.Serializable, K extends java.io.Serializable> 
-    extends CrudRepository<E, K>, JpaSpecificationExecutor<E> {
+    extends JpaRepository<E, K>, JpaSpecificationExecutor<E> {
 
 }

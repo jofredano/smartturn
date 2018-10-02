@@ -9,6 +9,6 @@ import co.org.smartturn.domain.vo.VOProfile;
  * @author joseanor
  *
  */
-public interface ProfileDataRepository extends DataRepository<VOProfile, Long> {
+public interface ProfileDAO extends DataRepository<VOProfile, Long> {
 
 }

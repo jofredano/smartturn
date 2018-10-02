@@ -100,7 +100,8 @@ public class UserController extends RestResources {
      */
 	@RequestMapping( value     = "/login",  
 					 method    = RequestMethod.POST, 
-					 consumes  = MediaType.APPLICATION_JSON_VALUE)
+					 consumes  = MediaType.APPLICATION_JSON_VALUE,
+					 produces = MediaType.APPLICATION_JSON_VALUE )
 	public ResponseEntity<Serializable> login(@RequestBody DTOCredential credential) {
     	try {
             return ResponseEntity
