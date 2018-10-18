@@ -1,4 +1,4 @@
-package co.org.smartturn.persistent.jpa.nojpa.impl;
+package co.org.smartturn.persistent.dao.impl;
 
 import javax.transaction.Transactional;
 

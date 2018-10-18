@@ -19,9 +19,13 @@ public interface AccessRepository extends EntityRepository<VOAccess, Long> {
 	 * @param 	credential
 	 * @return	String
 	 */
-	@Query(nativeQuery = true, value= "${AccessRepository.checkAccessByToken}")
-	public String checkAccessByToken(
-		@Param("token") String token);
+	@Query(
+	  nativeQuery = true, 
+	  value = "SELECT COUNT(p.token) FROM tb_accesos p " + 
+			  " WHERE p.token = :#{#access.token} " + 
+			  " AND DATE_ADD(p.inicio, INTERVAL p.duracion MINUTE) <= CURRENT_TIMESTAMP")
+	public Long checkAccessByToken(
+		@Param("access") VOAccess access);
 	
 	/**
 	 * Obtiene la informacion de acceso a traves del token

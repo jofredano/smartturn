@@ -21,10 +21,10 @@ import co.org.smartturn.data.transfer.security.DTOAccess;
 import co.org.smartturn.domain.vo.VOAccess;
 import co.org.smartturn.domain.vo.VOUser;
 import co.org.smartturn.exception.SystemException;
+import co.org.smartturn.persistent.dao.AccessDAO;
 import co.org.smartturn.persistent.jpa.AccessRepository;
 import co.org.smartturn.persistent.jpa.UserRepository;
-import co.org.smartturn.persistent.jpa.nojpa.AccessDAO;
-import co.org.smartturn.persistent.specification.UtilitiesSpecification;
+import co.org.smartturn.persistent.jpa.specification.UtilitiesSpecification;
 import co.org.smartturn.utils.Utilities;
 
 /**
@@ -81,7 +81,6 @@ public class UserComponentImpl implements UserComponent {
 		VOAccess access = null;
 		infoAccess = accessDao.checkUser( credential );
 		if(infoAccess != null && !infoAccess.isEmpty()) {
-		   System.err.println("Acceso => " + accessRepository.checkAccessByToken( (String)infoAccess.get("token") ) );
 		   access = accessRepository.getOneByToken( (String)infoAccess.get("token") );
 		   if(access != null) {
 			  response = new ResponseAccess( (DTOAccess)access.map(DTOAccess.class, null), 1 );   

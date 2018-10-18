@@ -1,4 +1,4 @@
-package co.org.smartturn.persistent.jpa.nojpa;
+package co.org.smartturn.persistent.dao;
 
 import java.io.Serializable;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package co.org.smartturn.persistent.jpa.nojpa.impl;
+package co.org.smartturn.persistent.dao.impl;
 
 import java.io.Serializable;
 import java.sql.Types;
@@ -15,8 +15,8 @@ import org.springframework.stereotype.Repository;
 
 import co.org.smartturn.data.model.security.Credential;
 import co.org.smartturn.exception.PersistentException;
-import co.org.smartturn.persistent.jpa.nojpa.AbstractDAO;
-import co.org.smartturn.persistent.jpa.nojpa.AccessDAO;
+import co.org.smartturn.persistent.dao.AbstractDAO;
+import co.org.smartturn.persistent.dao.AccessDAO;
 import co.org.smartturn.utils.Utilities;
 
 /**

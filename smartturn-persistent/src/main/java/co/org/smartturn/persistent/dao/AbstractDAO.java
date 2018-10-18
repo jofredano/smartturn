@@ -1,4 +1,4 @@
-package co.org.smartturn.persistent.jpa.nojpa;
+package co.org.smartturn.persistent.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
@@ -24,10 +24,18 @@ public abstract class AbstractDAO {
 		this.template = template;
 	}
 
+	/**
+	 * Obtiene la plantilla de jdbc
+	 * @return	JdbcTemplate
+	 */
 	public JdbcTemplate getTemplate() {
 		return template;
 	}
 
+	/**
+	 * Asigna la plantilla de jdbc
+	 * @param 	template	Informacion de la plantilla
+	 */
 	public void setTemplate(JdbcTemplate template) {
 		this.template = template;
 	}

@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EntityScan( "co.org.smartturn.domain.vo" )
-@EnableJpaRepositories( "co.org.smartturn.persistent.jpa" )
+@EnableJpaRepositories( "co.org.smartturn.persistent" )
 public class DatabaseConfiguration {
 	
 }

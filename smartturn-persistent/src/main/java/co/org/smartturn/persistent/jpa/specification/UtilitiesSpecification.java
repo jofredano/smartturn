@@ -1,4 +1,4 @@
-package co.org.smartturn.persistent.specification;
+package co.org.smartturn.persistent.jpa.specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

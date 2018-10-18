@@ -1,4 +1,4 @@
-package co.org.smartturn.persistent.jpa.nojpa;
+package co.org.smartturn.persistent.dao;
 
 import co.org.smartturn.definitions.database.data.DataRepository;
 import co.org.smartturn.domain.vo.VOProfile;
