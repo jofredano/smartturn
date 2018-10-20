@@ -21,9 +21,9 @@ import co.org.smartturn.data.transfer.security.DTOAccess;
 import co.org.smartturn.domain.vo.VOAccess;
 import co.org.smartturn.domain.vo.VOUser;
 import co.org.smartturn.exception.SystemException;
-import co.org.smartturn.persistent.dao.AccessDAO;
-import co.org.smartturn.persistent.jpa.AccessRepository;
-import co.org.smartturn.persistent.jpa.UserRepository;
+import co.org.smartturn.persistent.dao.JdbcAccessRepository;
+import co.org.smartturn.persistent.jpa.JpaAccessRepository;
+import co.org.smartturn.persistent.jpa.JpaUserRepository;
 import co.org.smartturn.persistent.jpa.specification.UtilitiesSpecification;
 import co.org.smartturn.utils.Utilities;
 
@@ -40,19 +40,19 @@ public class UserComponentImpl implements UserComponent {
 	 * Servicios de usuarios
 	 */
 	@Autowired
-	private UserRepository userRepository;
+	private JpaUserRepository userRepository;
 
 	/**
 	 * Servicios de usuarios
 	 */
 	@Autowired
-	private AccessRepository accessRepository;
+	private JpaAccessRepository accessRepository;
 	
 	/**
 	 * Servicios de usuarios
 	 */
 	@Autowired
-	private AccessDAO accessDao;
+	private JdbcAccessRepository accessDao;
 
 
 	@Override

@@ -11,7 +11,7 @@ import co.org.smartturn.data.transfer.Pageable;
 import co.org.smartturn.data.transfer.response.ResultContact;
 import co.org.smartturn.domain.vo.VOContact;
 import co.org.smartturn.exception.SystemException;
-import co.org.smartturn.persistent.jpa.ContactRepository;
+import co.org.smartturn.persistent.jpa.JpaContactRepository;
 import co.org.smartturn.utils.Utilities;
 
 /**
@@ -27,7 +27,7 @@ public class ContactComponentImpl implements ContactComponent {
 	 * Servicios de usuarios
 	 */
 	@Autowired
-	private ContactRepository dao;
+	private JpaContactRepository dao;
 
 	@Override
 	public Result<DTOContact> filter(MapEntity filter, Pageable paging) throws SystemException {
@@ -44,7 +44,7 @@ public class ContactComponentImpl implements ContactComponent {
 
 	@Override
 	public boolean update(DTOContact object) throws SystemException {
-		return false;
+		return dao.save( (VOContact)object.map(VOContact.class, object) ) != null;
 	}
 
 }
