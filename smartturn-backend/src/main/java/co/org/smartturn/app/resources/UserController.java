@@ -28,7 +28,7 @@ import co.org.smartturn.exception.data.Descriptor;
  *
  */
 @RestController 
-@RequestMapping("/users")
+@RequestMapping("/smartservices/users")
 public class UserController extends RestResources {
 
 	/**
