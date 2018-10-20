@@ -329,15 +329,29 @@ public final class Utilities {
 	 * @return	List<T>
 	 * @throws  MapperException 
 	 */
-	@SuppressWarnings("unchecked")
 	public static <S extends MapEntity, T extends MapEntity> List<T> toArray(Iterable<S> source, Class<?> name) throws  MapperException {
 		List<T> items = new ArrayList<>();
 		if(!Utilities.isEmpty(source)) {
 		   for(S item : source) {
-			   items.add( (T) item.map(name, item) );
+			   items.add( toMap(name, item) );
 		   }
 		}
 		return items;
+	}
+	
+	/**
+	 * Convierte objeto mapa a otro mapa
+	 * @param 	item	Entidad origen
+	 * @param 	name	Tipo de clase destino
+	 * @return	T
+	 * @throws 	MapperException
+	 */
+	@SuppressWarnings("unchecked")
+	public static <S extends MapEntity, T extends MapEntity> T toMap(Class<?> name, S item) throws MapperException {
+		if(isEmpty( item ) ) {
+		   return null;
+		}
+		return (T) item.map(name, item);
 	}
 
 }
