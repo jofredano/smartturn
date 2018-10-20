@@ -43,4 +43,12 @@ public interface ContactComponent extends Business {
 	 */
 	public boolean update(DTOContact object) throws SystemException;
 
+	/**
+	 * Permite actualizar/guardar la informacion de un contacto
+	 * @param 	entity			Informacion del contacto
+	 * @return	DTOContact
+	 * @throws 	SystemException
+	 */
+	public DTOContact save(DTOContact entity) throws SystemException;
+
 }

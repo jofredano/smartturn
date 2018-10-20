@@ -46,5 +46,10 @@ public class ContactComponentImpl implements ContactComponent {
 	public boolean update(DTOContact object) throws SystemException {
 		return dao.save( (VOContact)object.map(VOContact.class, object) ) != null;
 	}
+	
+	@Override
+	public DTOContact save(DTOContact entity) throws SystemException {
+		return Utilities.toMap(DTOContact.class, dao.save( Utilities.toMap(VOContact.class , entity) ));
+	}
 
 }
