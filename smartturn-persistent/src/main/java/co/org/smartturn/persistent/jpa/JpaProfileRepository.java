@@ -9,5 +9,5 @@ import co.org.smartturn.domain.vo.VOProfile;
  * @author joseanor
  *
  */
-public interface ProfileRepository extends EntityRepository<VOProfile, Long> {
+public interface JpaProfileRepository extends EntityRepository<VOProfile, Long> {
 }

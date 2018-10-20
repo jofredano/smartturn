@@ -12,7 +12,7 @@ import co.org.smartturn.domain.vo.VOAccess;
  * @author joseanor
  *
  */
-public interface AccessRepository extends EntityRepository<VOAccess, Long> {
+public interface JpaAccessRepository extends EntityRepository<VOAccess, Long> {
 	
 	/**
 	 * Verifica si existe el acceso activo

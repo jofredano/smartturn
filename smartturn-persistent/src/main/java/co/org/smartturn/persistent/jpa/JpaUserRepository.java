@@ -17,7 +17,7 @@ import co.org.smartturn.domain.vo.VOUser;
  * @author joseanor
  *
  */
-public interface UserRepository extends EntityRepository<VOUser, Long> {
+public interface JpaUserRepository extends EntityRepository<VOUser, Long> {
 
     /**
      * Busca usuarios basado en criterios de consulta

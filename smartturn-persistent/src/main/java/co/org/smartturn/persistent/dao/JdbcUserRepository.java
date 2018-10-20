@@ -1,7 +1,7 @@
 package co.org.smartturn.persistent.dao;
 
 import co.org.smartturn.definitions.database.data.DataRepository;
-import co.org.smartturn.domain.vo.VOReference;
+import co.org.smartturn.domain.vo.VOUser;
 
 /**
  * Interfaz que define las operaciones a los usuarios.
@@ -9,6 +9,6 @@ import co.org.smartturn.domain.vo.VOReference;
  * @author joseanor
  *
  */
-public interface ReferenceDAO extends DataRepository<VOReference, Long> {
+public interface JdbcUserRepository extends DataRepository<VOUser, Long>{
 
 }

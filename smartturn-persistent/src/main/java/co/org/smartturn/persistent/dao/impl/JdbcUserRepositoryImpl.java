@@ -22,7 +22,7 @@ import co.org.smartturn.utils.Utilities;
  */
 @Transactional
 @Repository(value = "userRepository")
-public class UserRepositoryImpl {
+public class JdbcUserRepositoryImpl {
 
 	public VOUser checkLogin(Credential credential) throws PersistentException {
 		if(credential == null) {

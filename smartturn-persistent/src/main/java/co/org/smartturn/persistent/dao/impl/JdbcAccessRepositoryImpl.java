@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import co.org.smartturn.data.model.security.Credential;
 import co.org.smartturn.exception.PersistentException;
 import co.org.smartturn.persistent.dao.AbstractDAO;
-import co.org.smartturn.persistent.dao.AccessDAO;
+import co.org.smartturn.persistent.dao.JdbcAccessRepository;
 import co.org.smartturn.utils.Utilities;
 
 /**
@@ -27,13 +27,13 @@ import co.org.smartturn.utils.Utilities;
  */
 @Transactional
 @Repository(value = "accessDAO")
-public class AccessRepositoryImpl extends AbstractDAO implements AccessDAO {
+public class JdbcAccessRepositoryImpl extends AbstractDAO implements JdbcAccessRepository {
 	
 	/**
 	 * Constructor de la clase
 	 * @param 	template	Plantilla jdbc
 	 */
-	public AccessRepositoryImpl(JdbcTemplate template) {
+	public JdbcAccessRepositoryImpl(JdbcTemplate template) {
 		super(template);
 	}
 

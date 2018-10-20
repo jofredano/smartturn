@@ -20,7 +20,7 @@ import co.org.smartturn.utils.Utilities;
  */
 @Transactional
 @Repository(value = "contactRepository")
-public class ContactRepositoryImpl {
+public class JdbcContactRepositoryImpl {
 
 	/**
 	 * Prepara la consulta a la base de datos

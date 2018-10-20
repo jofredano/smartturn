@@ -5,13 +5,13 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 /**
- * Implementacion de la persistencia a perfiles.
+ * Implementacion de la persistencia a usuarios.
  * 
  * @author joseanor
  *
  */
 @Transactional
-@Repository(value = "profileRepository")
-public class ProfileRepositoryImpl {
+@Repository(value = "referenceRepository")
+public class JdbcReferenceRepositoryImpl {
 
 }

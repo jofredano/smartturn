@@ -9,6 +9,6 @@ import co.org.smartturn.domain.vo.VOContact;
  * @author joseanor
  *
  */
-public interface ContactDAO extends DataRepository<VOContact, Long> {
+public interface JdbcContactRepository extends DataRepository<VOContact, Long> {
 
 }

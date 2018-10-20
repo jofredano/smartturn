@@ -1,7 +1,7 @@
 package co.org.smartturn.persistent.jpa;
 
 import co.org.smartturn.definitions.database.jpa.EntityRepository;
-import co.org.smartturn.domain.vo.VOReference;
+import co.org.smartturn.domain.vo.VOContact;
 
 /**
  * Interfaz que define las operaciones a los usuarios.
@@ -9,6 +9,6 @@ import co.org.smartturn.domain.vo.VOReference;
  * @author joseanor
  *
  */
-public interface ReferenceRepository extends EntityRepository<VOReference, Long> {
+public interface JpaContactRepository extends EntityRepository<VOContact, Long> {
 
 }

@@ -14,7 +14,7 @@ import co.org.smartturn.exception.PersistentException;
  * @author joseanor
  *
  */
-public interface AccessDAO extends DataRepository<VOAccess, Long> {
+public interface JdbcAccessRepository extends DataRepository<VOAccess, Long> {
 
 	/**
 	 * Validar el acceso de un usuario
