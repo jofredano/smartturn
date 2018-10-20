@@ -16,4 +16,11 @@ smartturn-persistent/bin/**
 smartturn-data/bin/**
 smartturn-utils/bin/**
 
+smartturn-backend/.settings/**
+smartturn-business/.settings/**
+smartturn-persistent/.settings/**
+smartturn-data/.settings/**
+smartturn-utils/.settings/**
+
 smartturn-ui/node_modules/**
+
