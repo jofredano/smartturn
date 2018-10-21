@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.org.smartturn.app.config.security.TokenSecurity;
 import co.org.smartturn.app.services.UserServices;
 import co.org.smartturn.data.model.User;
 import co.org.smartturn.data.transfer.DTOProfile;
@@ -44,7 +45,7 @@ public class UserController extends RestResources {
      */
 	@RequestMapping( value = "/version",  method = RequestMethod.GET )
 	@ResponseStatus( HttpStatus.OK )
-    public String getVersion() {
+    public String getVersionUser() {
     	return "1.0.0";
     }
 	
@@ -77,6 +78,7 @@ public class UserController extends RestResources {
      * Permite consultar la informacion de los usuarios
      * @return	Response
      */
+	@TokenSecurity( checkToken = true )
 	@RequestMapping( value    = "/filter",  
 					 method   = RequestMethod.POST, 
 					 consumes = MediaType.APPLICATION_JSON_VALUE,

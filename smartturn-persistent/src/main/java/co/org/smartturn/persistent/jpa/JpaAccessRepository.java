@@ -23,7 +23,7 @@ public interface JpaAccessRepository extends EntityRepository<VOAccess, Long> {
 	  nativeQuery = true, 
 	  value = "SELECT COUNT(p.token) FROM tb_accesos p " + 
 			  " WHERE p.token = :#{#access.token} " + 
-			  " AND DATE_ADD(p.inicio, INTERVAL p.duracion MINUTE) <= CURRENT_TIMESTAMP")
+			  " AND DATE_ADD(p.inicio, INTERVAL p.duracion MINUTE) >= CURRENT_TIMESTAMP")
 	public Long checkAccessByToken(
 		@Param("access") VOAccess access);
 	

@@ -99,5 +99,12 @@ public class UserComponentImpl implements UserComponent {
 	public boolean validate(Access<java.util.Date, DTOUser> credential) throws SystemException {
 		return false;
 	}
+	
+	@Override
+	public boolean checkToken(String token) {
+		VOAccess access = new VOAccess();
+		access.setToken( token );
+		return accessRepository.checkAccessByToken( access ) > 0;
+	}
 
 }

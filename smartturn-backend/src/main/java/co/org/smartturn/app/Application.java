@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 import co.org.smartturn.app.config.BasicConfiguration;
+import co.org.smartturn.app.config.BusinessConfiguration;
 import co.org.smartturn.app.config.SecurityConfiguration;
 
 /**
@@ -17,6 +18,7 @@ import co.org.smartturn.app.config.SecurityConfiguration;
 @Import(value = { 
 	BasicConfiguration.class, 
 	SecurityConfiguration.class, 
+	BusinessConfiguration.class
 })
 public class Application {
 	

@@ -4,6 +4,7 @@ import java.util.EnumSet;
 
 import javax.servlet.DispatcherType;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import co.org.smartturn.app.config.security.AuthenticationFilter;
+import co.org.smartturn.components.UserComponent;
 
 /**
  * Configuracion de la seguridad de la aplicacion.
@@ -24,6 +26,12 @@ import co.org.smartturn.app.config.security.AuthenticationFilter;
 @EnableWebMvc
 public class SecurityConfiguration implements WebMvcConfigurer {
 
+	/**
+	 * Componente de usuario
+	 */
+	@Autowired
+	protected UserComponent component;
+	
 	/**
 	 * Recursos estaticos del proyectos
 	 */
@@ -52,7 +60,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
 	public FilterRegistrationBean<AuthenticationFilter> securityFilter() {
         FilterRegistrationBean<AuthenticationFilter> registration = new FilterRegistrationBean<>();
         registration.setDispatcherTypes(EnumSet.allOf(DispatcherType.class));
-        registration.setFilter(new AuthenticationFilter());
+        registration.setFilter(new AuthenticationFilter( component ));
         registration.addInitParameter("service", "smartturn");
         registration.addInitParameter("publicResources: Recursos publicos", ".*\\/recursos\\/.*(gif|js|png|ico)");
         registration.addInitParameter("publicResources: css" , "\\/css\\/.*");

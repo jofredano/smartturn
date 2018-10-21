@@ -1,23 +1,34 @@
 package co.org.smartturn.utils;
 
 import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
+import org.springframework.core.type.filter.AssignableTypeFilter;
+
 import co.org.smartturn.data.structure.Field;
 import co.org.smartturn.data.structure.MapEntity;
 import co.org.smartturn.exception.transfer.MapperException;
+import co.org.smartturn.utils.filter.Filter;
 
 /**
  * Clase que contiene la mayoria de las utilidades de la aplicacion.
@@ -348,10 +359,67 @@ public final class Utilities {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <S extends MapEntity, T extends MapEntity> T toMap(Class<?> name, S item) throws MapperException {
-		if(isEmpty( item ) ) {
+		if(Utilities.isEmpty( item ) ) {
 		   return null;
 		}
 		return (T) item.map(name, item);
+	}
+	
+	/**
+	 * Filtra la informacion de un arreglo
+	 * @param 	items		Elementos a filtrar
+	 * @param 	filter		Instancia del filtro
+	 * @return	List<I>
+	 */
+	public static <I extends Object> List<I> filter(I[] items, Filter<I> filter) {
+		if(Utilities.isEmpty( items )) {
+		   return Collections.emptyList();	
+		}
+		List<I> result = new ArrayList<>();
+		for(I item : items) {
+			if(filter.eval( item )) {
+			   result.add( item );	
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Obtiene las subclases de una super clase a partir de un paquete
+	 * @param 	className		Instancia de la superclase
+	 * @param 	packageName		Nombre del paquete
+	 * @return	Set<Class<?>>
+	 */
+	public static Set<Class<?>> getSubClasses(Class<?> className, String packageName) {
+		Set<Class<?>> items = new HashSet<>();
+		try {
+			ClassPathScanningCandidateComponentProvider provider = 
+				new ClassPathScanningCandidateComponentProvider(false);
+			provider.addIncludeFilter(new AssignableTypeFilter(className));
+			Set<BeanDefinition> components = provider.findCandidateComponents(packageName);
+			for (BeanDefinition component : components) {
+			    items.add( Class.forName( component.getBeanClassName() ) );
+			}
+		} catch( ClassNotFoundException e) {
+			//Implemetacion de excepcion
+		}
+	    return items;
+	}
+	
+	/**
+	 * Devuelve los metodos que posee una clase base
+	 * @param 	className		Clase base
+	 * @param 	packageName		Nombre del paquete
+	 * @return	Stream<Method>
+	 */
+	public static Stream<Method> getDeclaredMethods(Class<?> className, String packageName) {
+		List<Method> items 	= new ArrayList<>();
+		Iterator<Class<?>> classNames = getSubClasses(className, packageName).iterator();
+		while(classNames.hasNext()) {
+			Class<?> classname = classNames.next();
+			items.addAll( Arrays.asList( classname.getDeclaredMethods() ) );
+		}
+		return items.stream();
 	}
 
 }

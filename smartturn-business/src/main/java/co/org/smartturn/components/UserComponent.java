@@ -72,4 +72,11 @@ public interface UserComponent extends Business {
 	 */
 	public boolean validate(Access<java.util.Date, DTOUser> credential) throws SystemException;
 
+	/**
+	 * Verifica si el token tiene sesion activa
+	 * @param 	token		 	Codigo del token
+	 * @return	boolean
+	 */
+	public boolean checkToken(String token);
+
 }
