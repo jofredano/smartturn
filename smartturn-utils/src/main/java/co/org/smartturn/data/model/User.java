@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import co.org.smartturn.data.model.security.Credential;
-import co.org.smartturn.data.structure.Field;
 import co.org.smartturn.data.structure.MapEntity;
 import co.org.smartturn.data.structure.Record;
-import co.org.smartturn.data.transfer.fields.ColumnFields;
 
 /**
  * Estructura general de un usuario.
@@ -57,20 +55,5 @@ public interface User<P extends Serializable> extends Record, Credential, MapEnt
 	 * @param 	profiles	Perfiles del usuario
 	 */
 	public void setProfiles(List<P> profiles);
-
-	public default Field[] getFields() { 
-		return new ColumnFields[] {
-			ColumnFields.USER_CODE,
-			ColumnFields.USER_CONTACT,
-			ColumnFields.USER_CREATED,
-			ColumnFields.USER_MODIFIED,
-			ColumnFields.USER_CREATER,
-			ColumnFields.USER_MODIFIER,
-			ColumnFields.USER_NAME,
-			ColumnFields.USER_PASSWD,
-			ColumnFields.USER_STATE,
-			ColumnFields.USER_PROFILES
-		}; 
-	}
 
 }

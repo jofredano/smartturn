@@ -4,7 +4,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import co.org.smartturn.data.model.security.Credential;
-import co.org.smartturn.data.structure.Field;
 import co.org.smartturn.data.transfer.structure.ObjectMap;
 
 /**
@@ -51,10 +50,4 @@ public final class DTOCredential extends ObjectMap implements Credential {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	@Override
-	public Field[] getFields() {
-		return null;
-	}
-
 }

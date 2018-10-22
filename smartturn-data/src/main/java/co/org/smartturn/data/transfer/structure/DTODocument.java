@@ -102,14 +102,6 @@ public final class DTODocument extends ObjectMap implements MapEntity {
 		}
 	}
 	
-	@Override
-	public Field[] getFields() {
-		return new ColumnFilter[] {
-			ColumnFilter.IDENTIFICATION_TYPE,
-			ColumnFilter.IDENTIFICATION_DIGITS
-		};
-	}
-	
 	
 	/**
 	 * Convierte string a documento

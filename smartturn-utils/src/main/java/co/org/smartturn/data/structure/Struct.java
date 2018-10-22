@@ -26,11 +26,5 @@ public interface Struct extends java.io.Serializable {
 	 * @return
 	 */
 	public String toString();
-	
-	/**
-	 * Devuelve el arreglo de campos asociados a esta estructura
-	 * @return	Field
-	 */
-	public Field[] getFields();
 
 }

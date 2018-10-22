@@ -143,20 +143,6 @@ public final class UserFilter extends ObjectMap implements MapEntity {
 	}
 	
 	@Override
-	public Field[] getFields() { 
-		return new ColumnFilter[] {
-			ColumnFilter.USER_BIRTHDAY,
-			ColumnFilter.USER_FIRSTNAME,
-			ColumnFilter.USER_SECONDNAME,
-			ColumnFilter.USER_FIRSTLASTNAME,
-			ColumnFilter.USER_SECONDLASTNAME,
-			ColumnFilter.USER_IDENTIFICATION,
-			ColumnFilter.USER_CREATED,
-			ColumnFilter.USER_NAME
-		}; 
-	}
-	
-	@Override
 	public Serializable get(Field field) {
 		ColumnFilter filter = (ColumnFilter)field;
 		switch(filter) {

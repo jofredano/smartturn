@@ -2,10 +2,8 @@ package co.org.smartturn.data.model;
 
 import java.io.Serializable;
 
-import co.org.smartturn.data.structure.Field;
 import co.org.smartturn.data.structure.MapEntity;
 import co.org.smartturn.data.structure.Record;
-import co.org.smartturn.data.transfer.fields.ColumnFields;
 
 /**
  * Estructura general de una referencia.
@@ -90,21 +88,6 @@ public interface Reference extends Record, MapEntity {
 	 * @param contact
 	 */
 	public void setContact(Long contact);
-
-	public default Field[] getFields() { 
-		return new ColumnFields[] {
-			ColumnFields.REFERENCE_CODE,
-			ColumnFields.REFERENCE_CREATED,
-			ColumnFields.REFERENCE_MODIFIED,
-			ColumnFields.REFERENCE_CREATER,
-			ColumnFields.REFERENCE_MODIFIER,
-			ColumnFields.REFERENCE_STATE,
-			ColumnFields.REFERENCE_CATEGORY,
-			ColumnFields.REFERENCE_TYPE,
-			ColumnFields.REFERENCE_VALUE,
-			ColumnFields.REFERENCE_PREFERENCE
-		}; 
-	}
 
 }
 

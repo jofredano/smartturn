@@ -156,19 +156,6 @@ public final class ContactFilter extends ObjectMap implements MapEntity {
 			default 					: break;
 		}
 	}
-	
-	@Override
-	public Field[] getFields() {
-		return new ColumnFilter[] {
-			ColumnFilter.CONTACT_BIRTHDAY,
-			ColumnFilter.CONTACT_FIRSTNAME,
-			ColumnFilter.CONTACT_SECONDNAME,
-			ColumnFilter.CONTACT_FIRSTLASTNAME,
-			ColumnFilter.CONTACT_SECONDLASTNAME,
-			ColumnFilter.CONTACT_IDENTIFICATION,
-			ColumnFilter.CONTACT_CREATED
-		};
-	}
 
 	/**
 	 * Enumerador de los campos.

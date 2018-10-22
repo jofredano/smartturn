@@ -3,10 +3,8 @@ package co.org.smartturn.data.model;
 import java.io.Serializable;
 import java.util.List;
 
-import co.org.smartturn.data.structure.Field;
 import co.org.smartturn.data.structure.MapEntity;
 import co.org.smartturn.data.structure.Record;
-import co.org.smartturn.data.transfer.fields.ColumnFields;
 
 /**
  * Estructura general de un contacto.
@@ -126,22 +124,5 @@ public interface Contact<R extends java.io.Serializable> extends Record, MapEnti
 	 * @param 	references		Listado de referencias.
 	 */
 	public void setReferences(List<R> references);
-	
-	public default Field[] getFields() { 
-		return new ColumnFields[] {
-			ColumnFields.CONTACT_CODE,
-			ColumnFields.CONTACT_CREATED,
-			ColumnFields.CONTACT_MODIFIED,
-			ColumnFields.CONTACT_CREATER,
-			ColumnFields.CONTACT_MODIFIER,
-			ColumnFields.CONTACT_BIRTHDAY,
-			ColumnFields.CONTACT_FIRSTNAME,
-			ColumnFields.CONTACT_SECONDNAME,
-			ColumnFields.CONTACT_FIRSTLASTNAME,
-			ColumnFields.CONTACT_SECONDLASTNAME,
-			ColumnFields.CONTACT_IDENTIFICATION,
-			ColumnFields.CONTACT_REFERENCES
-		}; 
-	}
 }
 
