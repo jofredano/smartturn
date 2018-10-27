@@ -1,6 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import '~primeng/resources/primeng.min.css';
+@import '~primeng/resources/themes/omega/theme.css';
+
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~font-awesome/css/font-awesome.css";
+@import "~font-awesome/css/font-awesome.css";
 
+@import 'assets/css/themes.css';
 
+/*
+ * Base structure
+ */
+html {
+  	position: relative;
+  	min-height: 100%;
+  	font-size: 16px;
+}
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+    padding-top: 3.5rem;
+    margin-bottom: 64px;
+}

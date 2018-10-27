@@ -10,7 +10,7 @@ import { CoreModule } from "./core/core.module";
 import { ViewsModule } from "./views/views.module";
 import { SharedModule } from "./shared/shared.module";
 
-@NgModule({
+@NgModule({ 
   declarations: [
     AppComponent
   ],
