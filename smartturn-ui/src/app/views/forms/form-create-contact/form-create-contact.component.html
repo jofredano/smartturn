@@ -1,3 +1,109 @@
-<p>
-  form-create-contact works!
-</p>
+<div class="card">
+  <div class="card-header">
+    Creacion de contactos
+  </div>
+  <div class="card-body">
+	<mat-horizontal-stepper [linear]="false" #stepper>
+		<mat-step [stepControl]="basic">
+			<ng-template matStepLabel>Datos basicos</ng-template>
+			<mat-card>
+				<mat-card-subtitle>
+					<div class="row">
+						<div class="col-md-10">
+							<span>&nbsp;</span>
+						</div>
+						<div class="col-md-2">
+							<button mat-raised-button color="primary" [disabled]="true" matStepperPrevious>Anterior</button>
+							<button mat-raised-button color="primary" matStepperNext>Siguiente</button>
+						</div>
+					</div>
+				</mat-card-subtitle>
+				<mat-card-content>
+					<form [formGroup]="basic">
+						<div class="form-smartturn">
+							<div class="form-group">  
+							  <mat-form-field appearance="fill">
+							    <mat-select placeholder="Tipo de contacto">
+							      <mat-option value="N">Natural</mat-option>
+							      <mat-option value="J">Juridico</mat-option>
+							    </mat-select>
+							  </mat-form-field>
+							  <mat-form-field appearance="fill">
+							    <mat-select placeholder="Tipo">
+							      <mat-option value="CC">Cedula de ciudadania</mat-option>
+							      <mat-option value="TI">Tarjeta de identidad</mat-option>
+							    </mat-select>
+							  </mat-form-field>
+							  <mat-form-field appearance="fill">
+							    <mat-label>Numero de identificacion</mat-label>
+							    <input matInput placeholder="Numero de identificacion">
+							  </mat-form-field>
+							</div>
+							<div class="form-group">  
+							  <mat-form-field appearance="fill">
+							    <mat-label>Primer nombre</mat-label>
+							    <input matInput placeholder="Primer nombre" formControlName="firstCtrl">
+							  </mat-form-field>
+							  <mat-form-field appearance="fill">
+							    <mat-label>Segundo nombre</mat-label>
+							    <input matInput placeholder="Segundo nombre">
+							  </mat-form-field>
+							  <mat-form-field appearance="fill">
+							    <mat-label>Primer apellido</mat-label>
+							    <input matInput placeholder="Primer nombre">
+							  </mat-form-field>
+							  <mat-form-field appearance="fill">
+							    <mat-label>Segundo apellido</mat-label>
+							    <input matInput placeholder="Segundo nombre">
+							  </mat-form-field>
+							</div>
+							<div class="form-group">  
+							  <mat-form-field appearance="fill">
+							    <mat-label>Fecha de nacimiento</mat-label>
+							    <input matInput [matDatepicker]="birth" placeholder="Seleccione la fecha">
+							    <mat-datepicker-toggle matSuffix [for]="birth"></mat-datepicker-toggle>
+							    <mat-datepicker #birth></mat-datepicker>
+							  </mat-form-field> 
+							  <mat-form-field appearance="fill">
+							    <mat-select placeholder="Estado del contacto">
+							      <mat-option value="option">Disponible</mat-option>
+							    </mat-select>
+							  </mat-form-field>
+							</div>
+						</div>
+					</form>
+				</mat-card-content>
+			</mat-card>
+		</mat-step>
+		<mat-step [stepControl]="reference">
+			<form [formGroup]="reference">
+				<ng-template matStepLabel>Datos de referencia</ng-template>
+				<mat-card>
+					<mat-card-subtitle>
+						<div class="row">
+							<div class="col-md-10">
+								<span>&nbsp;</span>
+							</div>
+							<div class="col-md-2">
+								<button mat-raised-button color="primary" matStepperPrevious>Anterior</button>
+								<button mat-raised-button color="primary" matStepperNext>Siguiente</button>
+							</div>
+						</div>
+					</mat-card-subtitle>
+					<mat-card-content>
+						<div class="form-smartturn">
+							<div class="form-group">  
+							  <mat-form-field appearance="fill">
+							    <mat-select placeholder="Reference">
+							      <mat-option value="option">Disponible</mat-option>
+							    </mat-select>
+							  </mat-form-field>
+							</div>
+						</div>
+					</mat-card-content>
+				</mat-card>
+			</form>
+		</mat-step>
+	</mat-horizontal-stepper>
+  </div>
+</div>

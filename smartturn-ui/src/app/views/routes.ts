@@ -1,9 +1,10 @@
 import { RouterModule, Routes } from "@angular/router";
 
-import { TemplateComponent } from "./layout/template/template.component";
-import { AuthorizationFilter } from "../core/security";
-import { FormMainComponent } from "./forms/form-main/form-main.component";
-
+import { AuthorizationFilter }        from "../core/security";
+import { TemplateComponent }          from "./layout/template/template.component";
+import { 
+    FormMainComponent,
+    FormCreateContactComponent }      from "./forms";
 
 export const APP_ROUTES: Routes = [
   //Rutas de los formularios de la aplicacion.
@@ -12,10 +13,10 @@ export const APP_ROUTES: Routes = [
     children: [
        { path: 'forms' , 
            children: [
-              { path: 'main'  , component: FormMainComponent },
-              { path: '**'    , redirectTo: 'main' }
-           ], 
-           canActivateChild: [AuthorizationFilter] }
+              { path: 'main'            , component: FormMainComponent },
+              { path: 'create-contact'  , component: FormCreateContactComponent },
+              { path: '**'              , redirectTo: 'main' }
+           ] }
     ]  
   },
   { path: '**', redirectTo: 'forms' }

@@ -1,0 +1,7 @@
+.form-smartturn .form-group {
+	 display: flex;
+}
+
+.form-smartturn .form-group > * {
+	width: 100%;
+}
