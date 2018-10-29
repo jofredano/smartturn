@@ -4,7 +4,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { LayoutModule } from "./layout/layout.module";
 import { SharedModule } from "../shared/shared.module";
 
-import { FormsModule } from './forms/forms.module';
+import { FormModule } from './forms/forms.module';
 
 import { APP_ROUTES } from "./routes";
 
@@ -13,7 +13,7 @@ import { APP_ROUTES } from "./routes";
      SharedModule,
      LayoutModule,
      RouterModule.forRoot(APP_ROUTES),
-     FormsModule
+     FormModule
   ],
   declarations: [
   ],
