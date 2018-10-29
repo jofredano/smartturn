@@ -94,9 +94,25 @@
 						<div class="form-smartturn">
 							<div class="form-group">  
 							  <mat-form-field appearance="fill">
-							    <mat-select placeholder="Reference">
-							      <mat-option value="option">Disponible</mat-option>
+							    <mat-select placeholder="Tipo referencia">
+							      <mat-option value="direccion">Direccion</mat-option>
+							      <mat-option value="telefono">Telefono</mat-option>
+							      <mat-option value="email">Correo electronico</mat-option>
+							      <mat-option value="postal">Correo postal</mat-option>
 							    </mat-select>
+							  </mat-form-field>
+							  <mat-form-field appearance="fill">
+							    <mat-select placeholder="Categoria referencia">
+							      <mat-option value="residencial">Residencial</mat-option>
+							      <mat-option value="celular">Celular</mat-option>
+							      <mat-option value="fijo">Fijo</mat-option>
+							    </mat-select>
+							  </mat-form-field>
+							</div>
+							<div class="form-group">  
+							  <mat-form-field appearance="fill">
+							    <mat-label>Digite la referencia</mat-label>
+							    <input matInput placeholder="Digite la referencia">
 							  </mat-form-field>
 							</div>
 						</div>

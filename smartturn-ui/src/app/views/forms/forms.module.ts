@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from "../../shared/shared.module";
 import {
     MatPaginatorModule
@@ -30,6 +30,7 @@ import {
     CommonModule,
     SharedModule,
     BrowserModule , 
+    FormsModule, 
     ReactiveFormsModule ,
     MatPaginatorModule, 
     MatSortModule , 
@@ -46,11 +47,11 @@ import {
     MatSelectModule ,
     MatCardModule , 
     MatStepperModule , 
-    MatDialogModule
+    MatDialogModule , 
   ],
   declarations: [
     FormMainComponent,
     FormCreateContactComponent
   ]
 })
-export class FormsModule { }
+export class FormModule { }
