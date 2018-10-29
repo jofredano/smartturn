@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SharedModule } from "../../shared/shared.module";
-import { FormMainComponent } from './form-main/form-main.component';
+import { 
+    FormMainComponent
+  , FormCreateContactComponent } from './';
 
 @NgModule({
   imports: [
@@ -10,7 +12,8 @@ import { FormMainComponent } from './form-main/form-main.component';
     SharedModule
   ],
   declarations: [
-    FormMainComponent
+    FormMainComponent,
+    FormCreateContactComponent
   ]
 })
 export class FormsModule { }
