@@ -4,7 +4,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { LayoutModule } from "./layout/layout.module";
 import { SharedModule } from "../shared/shared.module";
 
-import { FormModule } from './forms/forms.module';
+import { FormModule } from './form/form.module';
 
 import { APP_ROUTES } from "./routes";
 
