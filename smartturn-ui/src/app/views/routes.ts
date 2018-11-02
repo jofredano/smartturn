@@ -4,7 +4,7 @@ import { AuthorizationFilter }        from "../core/security";
 import { TemplateComponent }          from "./layout/template/template.component";
 import { 
     FormMainComponent,
-    FormCreateContactComponent }      from "./forms";
+    FormCreateContactComponent }      from "./form";
 
 export const APP_ROUTES: Routes = [
   //Rutas de los formularios de la aplicacion.

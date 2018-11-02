@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from "../../shared/shared.module";
-import { WidgetsModule } from "../widgets/widgets.module";
 import {
     MatPaginatorModule
   , MatSortModule
@@ -22,9 +21,7 @@ import {
   , MatStepperModule
   , MatDialogModule
 } from '@angular/material';
-import { 
-    FormMainComponent
-  , FormCreateContactComponent } from './';
+import { WidgetConfirmComponent } from './widget-confirm/widget-confirm.component';
 
 @NgModule({
   imports: [
@@ -33,7 +30,6 @@ import {
     BrowserModule , 
     FormsModule, 
     ReactiveFormsModule ,
-    WidgetsModule,
     MatPaginatorModule, 
     MatSortModule , 
     MatTableModule ,
@@ -49,11 +45,13 @@ import {
     MatSelectModule ,
     MatCardModule , 
     MatStepperModule , 
-    MatDialogModule , 
+    MatDialogModule 
+  ],
+  entryComponents: [
+    WidgetConfirmComponent
   ],
   declarations: [
-    FormMainComponent,
-    FormCreateContactComponent
+    WidgetConfirmComponent
   ]
 })
-export class FormModule { }
+export class WidgetsModule { }

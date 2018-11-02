@@ -5,15 +5,18 @@ import { LayoutModule } from "./layout/layout.module";
 import { SharedModule } from "../shared/shared.module";
 
 import { FormModule } from './form/form.module';
+import { WidgetsModule } from './widgets/widgets.module';
 
 import { APP_ROUTES } from "./routes";
+
 
 @NgModule({
   imports: [
      SharedModule,
      LayoutModule,
      RouterModule.forRoot(APP_ROUTES),
-     FormModule
+     FormModule,
+     WidgetsModule
   ],
   declarations: [
   ],

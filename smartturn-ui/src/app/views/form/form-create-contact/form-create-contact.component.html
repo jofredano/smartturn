@@ -13,7 +13,7 @@
 							<span>&nbsp;</span>
 						</div>
 						<div class="col-md-2">
-							<button mat-raised-button color="primary" [disabled]="true" matStepperPrevious>Anterior</button>
+							<button mat-raised-button color="primary" [attr.disabled]="true" matStepperPrevious>Anterior</button>
 							<button mat-raised-button color="primary" matStepperNext>Siguiente</button>
 						</div>
 					</div>
@@ -23,49 +23,49 @@
 						<div class="form-smartturn">
 							<div class="form-group">  
 							  <mat-form-field appearance="fill">
-							    <mat-select placeholder="Tipo de contacto">
+							    <mat-select placeholder="Tipo de contacto" name="type" formControlName="firstCtrl">
 							      <mat-option value="N">Natural</mat-option>
 							      <mat-option value="J">Juridico</mat-option>
 							    </mat-select>
 							  </mat-form-field>
 							  <mat-form-field appearance="fill">
-							    <mat-select placeholder="Tipo">
+							    <mat-select placeholder="Tipo" name="documentType" formControlName="firstCtrl">
 							      <mat-option value="CC">Cedula de ciudadania</mat-option>
 							      <mat-option value="TI">Tarjeta de identidad</mat-option>
 							    </mat-select>
 							  </mat-form-field>
 							  <mat-form-field appearance="fill">
-							    <mat-label>Numero de identificacion</mat-label>
-							    <input matInput placeholder="Numero de identificacion">
+							    <mat-label>Numero de identificaci&oacute;n</mat-label>
+							    <input matInput placeholder="Numero de identificacion" name="documentNumber" formControlName="firstCtrl">
 							  </mat-form-field>
 							</div>
 							<div class="form-group">  
 							  <mat-form-field appearance="fill">
 							    <mat-label>Primer nombre</mat-label>
-							    <input matInput placeholder="Primer nombre" formControlName="firstCtrl">
+							    <input matInput placeholder="Primer nombre" name="firstName" formControlName="firstCtrl">
 							  </mat-form-field>
 							  <mat-form-field appearance="fill">
 							    <mat-label>Segundo nombre</mat-label>
-							    <input matInput placeholder="Segundo nombre">
+							    <input matInput placeholder="Segundo nombre" name="secondName">
 							  </mat-form-field>
 							  <mat-form-field appearance="fill">
 							    <mat-label>Primer apellido</mat-label>
-							    <input matInput placeholder="Primer nombre">
+							    <input matInput placeholder="Primer apellido" name="firstLastname" formControlName="firstCtrl">
 							  </mat-form-field>
 							  <mat-form-field appearance="fill">
 							    <mat-label>Segundo apellido</mat-label>
-							    <input matInput placeholder="Segundo nombre">
+							    <input matInput placeholder="Segundo apellido" name="secondLastname" >
 							  </mat-form-field>
 							</div>
 							<div class="form-group">  
 							  <mat-form-field appearance="fill">
 							    <mat-label>Fecha de nacimiento</mat-label>
-							    <input matInput [matDatepicker]="birth" placeholder="Seleccione la fecha">
+							    <input matInput [matDatepicker]="birth" name="birth" placeholder="Seleccione la fecha" formControlName="firstCtrl">
 							    <mat-datepicker-toggle matSuffix [for]="birth"></mat-datepicker-toggle>
 							    <mat-datepicker #birth></mat-datepicker>
 							  </mat-form-field> 
 							  <mat-form-field appearance="fill">
-							    <mat-select placeholder="Estado del contacto">
+							    <mat-select placeholder="Estado del contacto" name="status" formControlName="firstCtrl">
 							      <mat-option value="option">Disponible</mat-option>
 							    </mat-select>
 							  </mat-form-field>
@@ -94,7 +94,7 @@
 						<div class="form-smartturn">
 							<div class="form-group">  
 							  <mat-form-field appearance="fill">
-							    <mat-select placeholder="Tipo referencia">
+							    <mat-select placeholder="Tipo referencia" name="referenceType">
 							      <mat-option value="direccion">Direccion</mat-option>
 							      <mat-option value="telefono">Telefono</mat-option>
 							      <mat-option value="email">Correo electronico</mat-option>
@@ -102,7 +102,7 @@
 							    </mat-select>
 							  </mat-form-field>
 							  <mat-form-field appearance="fill">
-							    <mat-select placeholder="Categoria referencia">
+							    <mat-select placeholder="Categoria referencia" name="referenceCategory">
 							      <mat-option value="residencial">Residencial</mat-option>
 							      <mat-option value="celular">Celular</mat-option>
 							      <mat-option value="fijo">Fijo</mat-option>
@@ -112,9 +112,69 @@
 							<div class="form-group">  
 							  <mat-form-field appearance="fill">
 							    <mat-label>Digite la referencia</mat-label>
-							    <input matInput placeholder="Digite la referencia">
+							    <input matInput placeholder="Digite la referencia" name="referenceValue">
 							  </mat-form-field>
 							</div>
+							<div class="form-group">
+								<div class="col-md-10">&nbsp;</div>
+								<button mat-raised-button 
+								        color="primary" 
+								        class="col-md-2"
+								        (click)="addReference()">Agregar</button>
+							</div>
+						</div>
+						<div class="form-smartturn">
+							<div class="form-group">
+								<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+			
+								  <!-- Name Column -->
+								  <ng-container matColumnDef="type">
+								    <th mat-header-cell *matHeaderCellDef> Tipo </th>
+								    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+								  </ng-container>
+								
+								  <!-- Weight Column -->
+								  <ng-container matColumnDef="value">
+								    <th mat-header-cell *matHeaderCellDef> Valor </th>
+								    <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+								  </ng-container>
+								
+								  <!-- Symbol Column -->
+								  <ng-container matColumnDef="preference">
+								    <th mat-header-cell *matHeaderCellDef> Preferencia </th>
+								    <td mat-cell *matCellDef="let element"> {{element.preference}} </td>
+								  </ng-container>
+								
+								  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+								  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+								  
+								</table>
+							</div>
+						</div>
+					</mat-card-content>
+				</mat-card>
+			</form>
+		</mat-step>
+		<mat-step [stepControl]="finish">
+			<form [formGroup]="finish">
+				<ng-template matStepLabel>Previsualizaci&oacute;n de los datos</ng-template>
+				<mat-card>
+					<mat-card-subtitle>
+						<div class="row">
+							<div class="col-md-10">
+								<span>&nbsp;</span>
+							</div>
+							<div class="col-md-2">
+								<button mat-raised-button color="primary" matStepperPrevious>Anterior</button>
+								<button mat-raised-button color="primary" (click)="openDialog()">Guardar</button>
+							</div>
+						</div>
+					</mat-card-subtitle>
+					<mat-card-content>
+						<div class="form-smartturn">
+							<!-- 
+							
+							-->
 						</div>
 					</mat-card-content>
 				</mat-card>

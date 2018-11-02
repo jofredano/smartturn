@@ -3,18 +3,28 @@ import {
     FormBuilder
   , FormGroup
   , Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import { DTOReference } from "../../../core/model";
+import { WidgetConfirmComponent } from "../../widgets";
 
+const ELEMENT_DATA: DTOReference[] = [];
+  
 @Component({
   selector: 'app-form-create-contact',
   templateUrl: './form-create-contact.component.html',
   styleUrls: ['./form-create-contact.component.css']
 })
 export class FormCreateContactComponent implements OnInit {
-    
+  
+  public displayedColumns: string[] = [ 'type', 'value', 'preference' ];
+  
+  public dataSource = ELEMENT_DATA;
+
   public basic: FormGroup;
   public reference: FormGroup;
+  public finish: FormGroup;
 
-  constructor(private _builder: FormBuilder) { }
+  constructor(private _builder: FormBuilder, public dialog: MatDialog) { }
 
   ngOnInit() {
       this.initForm();
@@ -27,5 +37,21 @@ export class FormCreateContactComponent implements OnInit {
       this.reference = this._builder.group({
          secondCtrl: ['', Validators.required]
       });
+      this.finish = this._builder.group({
+         tirthCtrl: ['', Validators.required]
+      });
+  }
+  
+  public openDialog(): void {
+      const dialogRef                     = this.dialog.open( WidgetConfirmComponent ); 
+      dialogRef.componentInstance.title   = 'Confirmación de creación';
+      dialogRef.componentInstance.content = 'Esta a punto de crear el contacto, ¿Está seguro de hacerlo?';
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+  }
+  
+  public addReference(): void {
+      console.log('Se hace normal');
   }
 }
