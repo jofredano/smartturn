@@ -24,3 +24,4 @@ smartturn-utils/.settings/**
 
 smartturn-ui/node_modules/**
 
+/.gradle/
