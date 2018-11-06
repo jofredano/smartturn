@@ -7,6 +7,8 @@
 @import "~font-awesome/css/font-awesome.css";
 @import "~font-awesome/css/font-awesome.css";
 
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
 @import 'assets/css/themes.css';
 
 /*
@@ -20,6 +22,8 @@ html {
 
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
+    /*
     padding-top: 3.5rem;
     margin-bottom: 64px;
+    */
 }
