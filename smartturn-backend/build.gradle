@@ -79,6 +79,9 @@ dependencies {
         exclude group: 'xerces', module: 'xercesImpl'
     }
     compile('com.google.code.gson:gson:2.7') 
+    //Swagger
+    compile ("io.springfox:springfox-swagger2:2.9.2")
+    compile ("io.springfox:springfox-swagger-ui:2.9.2")
  	//-- SuraLogger
     compile 'com.sun.jersey:jersey-client:1.19'
  	compile 'com.sun.jersey:jersey-core:1.19'
