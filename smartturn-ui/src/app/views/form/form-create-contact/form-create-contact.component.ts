@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { 
     FormBuilder
   , FormGroup
+  , FormControl
   , Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 import { DTOReference } from "../../../core/model";
 import { WidgetConfirmComponent } from "../../widgets";
 
@@ -16,13 +17,19 @@ const ELEMENT_DATA: DTOReference[] = [];
 })
 export class FormCreateContactComponent implements OnInit {
   
-  public displayedColumns: string[] = [ 'type', 'value', 'preference' ];
+  public displayedColumns: string[] = [ 'type', 'category', 'value', 'preference' ];
   
-  public dataSource = ELEMENT_DATA;
+  public dataSource = new MatTableDataSource<DTOReference>(ELEMENT_DATA);
 
   public basic: FormGroup;
   public reference: FormGroup;
   public finish: FormGroup;
+  
+  public referenceType: any;
+  
+  public referenceCategory: any;
+  
+  public referenceValue: any = null;
 
   constructor(private _builder: FormBuilder, public dialog: MatDialog) { }
 
@@ -52,6 +59,6 @@ export class FormCreateContactComponent implements OnInit {
   }
   
   public addReference(): void {
-      console.log('Se hace normal');
+      console.log('Se hace normal =>' + this.referenceType);
   }
 }
